@@ -11,4 +11,5 @@ if (os.type() === "Linux") {
 if (process.env.NODE_ENV === undefined) {
     console.log("Installing Production Deps...");
     exec("npm install --production");
+    process.env.NODE_ENV = "production";
 }
