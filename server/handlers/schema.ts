@@ -2,7 +2,7 @@ const getServers = () => {
     if (process.env.NODE_ENV === "production") {
         return [
             {
-                url: "https://benweare.co.uk/",
+                url: "https://www.benweare.co.uk/",
                 description: "Production Build",
             },
         ];

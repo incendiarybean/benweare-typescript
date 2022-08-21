@@ -7,9 +7,3 @@ if (os.type() === "Linux") {
 } else if (os.type() === "Windows_NT") {
     exec("move build ./dist/app");
 }
-
-if (process.env.NODE_ENV === undefined) {
-    console.log("Installing Production Deps...");
-    exec("npm install --production");
-    process.env.NODE_ENV = "production";
-}
