@@ -1,7 +1,7 @@
 import { NasaArticle, NewsCard } from "@lib/types";
 import React, { useEffect, useState } from "react";
 import { sleep } from "src/TS/utils";
-import Loader from "../loader";
+import { Loader, Error } from "../..";
 
 function Component({ Endpoint, SiteName }: NewsCard) {
     const [article, setArticle] = useState<NasaArticle>();
@@ -27,8 +27,9 @@ function Component({ Endpoint, SiteName }: NewsCard) {
     return (
         <div className="px-6 my-3 w-full">
             <div className="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-gray-300 rounded-xl">
-                {loaded && article ? (
-                    !article.url.includes("youtube.com") ? (
+                {loaded === true &&
+                    article &&
+                    (!article.url.includes("youtube.com") ? (
                         <div
                             className={`animate__animated animate__fadeIn animate__faster w-full rounded-xl flex-col xl:flex-row bg-white shadow-md`}
                         >
@@ -103,10 +104,9 @@ function Component({ Endpoint, SiteName }: NewsCard) {
                                 </div>
                             </div>
                         </a>
-                    )
-                ) : (
-                    <Loader />
-                )}
+                    ))}
+                {loaded === "Failed" && <Error />}
+                {loaded === false && <Loader />}
             </div>
         </div>
     );

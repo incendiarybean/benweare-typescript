@@ -1,3 +1,4 @@
+import React from "react";
 import { BodyProps } from "@lib/types";
 import { NewsCarousel, Footer, Card } from "../..";
 

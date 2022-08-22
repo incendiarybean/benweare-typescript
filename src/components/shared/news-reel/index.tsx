@@ -1,7 +1,7 @@
 import { NewsArticle, NewsCarousel } from "@lib/types";
 import React, { createRef, useEffect, useState } from "react";
 import { sleep } from "src/TS/utils";
-import Loader from "../loader";
+import { Loader, Error } from "../..";
 import { SwipeHandler } from "src/hooks/swipeHandler";
 
 function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
@@ -66,7 +66,7 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
             className="my-3 px-6 w-full"
         >
             <div className="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-gray-300 rounded-xl">
-                {loaded ? (
+                {loaded === true && articles && (
                     <div className="w-full">
                         {articles.map((data, index) => (
                             <a
@@ -149,9 +149,9 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
                             </div>
                         </div>
                     </div>
-                ) : (
-                    <Loader />
                 )}
+                {loaded === "Failed" && <Error />}
+                {loaded === false && <Loader />}
             </div>
         </div>
     );

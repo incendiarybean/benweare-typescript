@@ -28,7 +28,7 @@
         "start-dev": "nodemon ./server/index.ts",
         "build": "react-scripts build && tsc --p ./server && node ./dist/build.js",
         "build-client": "react-scripts build",
-        "test": "react-scripts test --watchAll=false && jest ./server/*"
+        "test": "react-scripts test --watchAll=false && jest ./server/* --silent"
     },
     "eslintConfig": {
         "extends": [
