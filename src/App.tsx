@@ -16,20 +16,20 @@ function App() {
         <Router>
             <div className="">
                 <ToastContainer />
-                <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 auto-cols-min text-center">
+                <div className="w-full flex flex-col md:flex-row text-center">
                     <Navbar
                         Icon={Icon}
                         setMobileMenu={setMobileMenu}
                         mobileMenu={mobileMenu}
                     />
                     <div
-                        className={`md:col-span-2 xl:col-span-1 min-w-fit w-full transition-all duration-150 ${
+                        className={`w-full md:max-w-4xl transition-all duration-150 ${
                             mobileMenu ? "opacity-40" : "opacity-100"
                         }`}
                     >
                         <Routes Icon={Icon} mobileMenu={mobileMenu} />
                     </div>
-                    <div className="md:hidden w-56 mt-12 divide-y divide-slate-300"></div>
+                    <div className="hidden lg:block w-auto transition-all duration-150"></div>
                 </div>
             </div>
         </Router>

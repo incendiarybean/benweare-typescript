@@ -24,7 +24,6 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
     };
 
     useEffect(() => {
-        /* TODO: Fix this block, it re-renders the page incorrectly */
         const storedPath = window.localStorage.getItem("path");
         if (!hasBeenNavigated && storedPath) {
             navigate(window.localStorage.getItem("path") as string);
@@ -39,7 +38,7 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
     ExternalClickHandler(navigationElement, setMobileMenu);
 
     return (
-        <div className="flex justify-end md:mr-4 md:mt-28 w-full sticky top-0 z-10">
+        <div className="flex justify-end md:mr-4 md:mt-28 w-full md:w-1/3 sticky top-0 z-10">
             <div
                 ref={navigationElement}
                 className="bg-white md:bg-gray-200 shadow md:shadow-none select-none group relative w-full md:w-48"
@@ -65,9 +64,9 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
                         to="/dashboard"
                         className={`transition-bg ease-in-out duration-100 ${
                             activePageNumber === 0
-                                ? "text-white bg-gradient-to-r from-blue-500 to-blue-700 font-semibold leading-tight shadow-md"
-                                : "hover:bg-slate-100"
-                        } hover:shadow-sm w-full md:w-48 h-12 flex items-center md:rounded-md`}
+                                ? "text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 font-semibold leading-tight shadow-md"
+                                : "hover:bg-slate-100 hover:shadow-sm"
+                        } w-full md:w-48 h-12 flex items-center md:rounded-md`}
                         onClick={() => handlePageNavigation(0)}
                     >
                         <div className="p-3">
@@ -83,9 +82,9 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
                         to="/"
                         className={`transition-bg ease-in-out duration-100 ${
                             activePageNumber === 1
-                                ? "text-white bg-gradient-to-r from-blue-500 to-blue-700 font-semibold leading-tight shadow-md"
-                                : "hover:bg-slate-100"
-                        } hover:shadow-sm w-full md:w-48 h-12 flex items-center md:rounded-md`}
+                                ? "text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 font-semibold leading-tight shadow-md"
+                                : "hover:bg-slate-100 hover:shadow-sm"
+                        } w-full md:w-48 h-12 flex items-center md:rounded-md`}
                         onClick={() => handlePageNavigation(1)}
                     >
                         <div className="p-3">
