@@ -15,7 +15,7 @@ function Component({ Endpoint, SiteName }: NewsCard) {
                     setArticle(data);
                     setLoaded(true);
                 })
-                .catch((e) => {
+                .catch(() => {
                     setLoaded("Failed");
                     sleep(5000).then(getDetail);
                 });
