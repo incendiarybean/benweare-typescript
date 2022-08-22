@@ -1,37 +1,48 @@
 import React, { useEffect, useState, createRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NavbarProps } from "@lib/types";
 import { ExternalClickHandler } from "src/hooks/externalClickHandler";
 
 function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
-    const [activePageNumber, setActivePageNumber] = useState(0);
+    const [activePageNumber, setActivePageNumber] = useState<number>(0);
+    const [hasBeenNavigated, setHasBeenNavigated] = useState<boolean>(false);
+
+    const navigate = useNavigate();
 
     const handlePageNavigation = (pageNumber: number) => {
         setActivePageNumber(pageNumber);
+        setHasBeenNavigated(true);
         if (mobileMenu) {
             setMobileMenu(false);
         }
     };
 
+    const setActiveRoute = (route: string) => {
+        if (route === "/") {
+            setActivePageNumber(1);
+        } else setActivePageNumber(0);
+    };
+
     useEffect(() => {
-        const currentPage = window.location.pathname;
-        switch (currentPage) {
-            case "/":
-                setActivePageNumber(1);
-                break;
-            default:
-                break;
+        /* TODO: Fix this block, it re-renders the page incorrectly */
+        const storedPath = window.localStorage.getItem("path");
+        if (!hasBeenNavigated && storedPath) {
+            navigate(window.localStorage.getItem("path") as string);
+            setHasBeenNavigated(true);
         }
-    }, []);
+
+        window.localStorage.setItem("path", window.location.pathname);
+        setActiveRoute(window.location.pathname);
+    }, [navigate, hasBeenNavigated]);
 
     const navigationElement = createRef<HTMLDivElement>();
     ExternalClickHandler(navigationElement, setMobileMenu);
 
     return (
-        <div className="flex justify-end md:mr-4 md:mt-28 w-full">
+        <div className="flex justify-end md:mr-4 md:mt-28 w-full sticky top-0 z-10">
             <div
                 ref={navigationElement}
-                className="bg-white md:bg-gray-200 shadow md:shadow-none select-none group relative md:sticky top-0 w-full md:w-48"
+                className="bg-white md:bg-gray-200 shadow md:shadow-none select-none group relative w-full md:w-48"
             >
                 <button
                     onClick={() => setMobileMenu(!mobileMenu)}

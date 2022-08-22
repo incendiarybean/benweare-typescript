@@ -1,7 +1,7 @@
 import { NewsArticle, NewsCarousel } from "@lib/types";
 import React, { createRef, useEffect, useState } from "react";
 import { sleep } from "src/TS/utils";
-import Loader from "../loader";
+import { Loader, Error } from "../..";
 import { SwipeHandler } from "src/hooks/swipeHandler";
 
 function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
@@ -63,10 +63,10 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
         <div
             ref={navigationElement}
             id={`${SiteName}-news`}
-            className="my-3 px-6 w-full"
+            className="px-2 md:px-6 my-3 w-full"
         >
             <div className="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-gray-300 rounded-xl">
-                {loaded ? (
+                {loaded === true && articles && (
                     <div className="w-full">
                         {articles.map((data, index) => (
                             <a
@@ -78,9 +78,9 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
                                     index
                                 )}w-full rounded-xl flex-col xl:flex-row bg-white shadow-md transition-all duration-100 md:hover:scale-95 hover:bg-slate-100`}
                             >
-                                <div className="p-2">
+                                <div className="p-2 flex-grow">
                                     <div
-                                        className="rounded-t-xl w-full h-52 md:w-full xl:w-96 shadow-sm rounded-lg bg-cover"
+                                        className="rounded-t-xl w-full md:w-full xl:w-96 h-52 shadow-sm rounded-lg bg-cover"
                                         style={{
                                             backgroundImage: `url(${data.img})`,
                                         }}
@@ -88,10 +88,10 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
                                 </div>
 
                                 <div className="w-full xl:w-1/2 p-3 flex flex-col justify-between h-36 max-h-36 xl:h-auto xl:max-h-max">
-                                    <h1 className="text-left text-sm xl:text-lg text-slate-700 font-bold leading-normal max-h-12">
+                                    <h1 className="text-left text-sm xl:text-lg text-slate-700 font-bold leading-normal h-36 overflow-hidden">
                                         {data.title}
                                     </h1>
-                                    <div className="flex flex-row mt-4">
+                                    <div className="flex flex-row">
                                         <button
                                             onClick={() =>
                                                 window.open(data.link, "_blank")
@@ -100,7 +100,7 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
                                         >
                                             Read Article
                                         </button>
-                                        <div className="flex flex-col w-1/2 md:w-full mt-1">
+                                        <div className="flex flex-col w-1/2 md:w-full">
                                             <h2 className="text-center text-xs mt-2 mb-2 text-blue-600 font-bold uppercase">
                                                 {SiteName} Article
                                             </h2>
@@ -149,9 +149,9 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
                             </div>
                         </div>
                     </div>
-                ) : (
-                    <Loader />
                 )}
+                {loaded === "Failed" && <Error />}
+                {loaded === false && <Loader />}
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import { NasaArticle, NewsCard } from "@lib/types";
 import React, { useEffect, useState } from "react";
 import { sleep } from "src/TS/utils";
-import Loader from "../loader";
+import { Loader, Error } from "../..";
 
 function Component({ Endpoint, SiteName }: NewsCard) {
     const [article, setArticle] = useState<NasaArticle>();
@@ -25,10 +25,11 @@ function Component({ Endpoint, SiteName }: NewsCard) {
     }, [Endpoint, SiteName]);
 
     return (
-        <div className="px-6 my-3 w-full">
+        <div className="px-2 md:px-6 my-3 w-full">
             <div className="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-gray-300 rounded-xl">
-                {loaded && article ? (
-                    !article.url.includes("youtube.com") ? (
+                {loaded === true &&
+                    article &&
+                    (!article.url.includes("youtube.com") ? (
                         <div
                             className={`animate__animated animate__fadeIn animate__faster w-full rounded-xl flex-col xl:flex-row bg-white shadow-md`}
                         >
@@ -76,7 +77,11 @@ function Component({ Endpoint, SiteName }: NewsCard) {
                             <div className="p-2">
                                 <iframe
                                     className="w-full rounded-lg h-96"
-                                    src={`https://www.youtube.com/embed/I0578Bzsvaw`}
+                                    src={`https://www.youtube.com/embed/${
+                                        article.url.split("/")[
+                                            article.url.split("/").length - 1
+                                        ]
+                                    }`}
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
@@ -99,10 +104,9 @@ function Component({ Endpoint, SiteName }: NewsCard) {
                                 </div>
                             </div>
                         </a>
-                    )
-                ) : (
-                    <Loader />
-                )}
+                    ))}
+                {loaded === "Failed" && <Error />}
+                {loaded === false && <Loader />}
             </div>
         </div>
     );

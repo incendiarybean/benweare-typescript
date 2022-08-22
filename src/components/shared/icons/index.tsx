@@ -213,34 +213,6 @@ export const Foggy = () => (
     </svg>
 );
 
-export const Error = () => (
-    <svg
-        height="21"
-        className="transform scale-150"
-        viewBox="0 0 21 21"
-        width="21"
-        xmlns="https:////www.w3.org/2000/svg"
-    >
-        <g fill="none" fillRule="evenodd">
-            <circle
-                cx="10.5"
-                cy="10.5"
-                r="8"
-                stroke="#2a2e3b"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <path
-                d="m10.5 11.5v-5"
-                stroke="#2a2e3b"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <circle cx="10.5" cy="14.5" fill="#2a2e3b" r="1" />
-        </g>
-    </svg>
-);
-
 export const LoaderSmall = () => (
     <svg
         className="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-700 "

@@ -1,4 +1,3 @@
-import { AxiosError } from "axios";
 import { Application } from "express";
 import { MOCK_WEATHER_RESPONSE } from "../lib/resource-data";
 import {
@@ -15,8 +14,8 @@ const weather_routes = (app: Application) => {
     /*--------------*/
 
     const storage: WeatherStorage = {
-        timestamp: undefined,
-        data: undefined,
+        timestamp: null,
+        data: { day: null, days: null, location: null },
     };
 
     const config: WeatherConfig = {
@@ -47,54 +46,44 @@ const weather_routes = (app: Application) => {
             return;
         }
 
-        await getWeather();
-        setTimeout(async () => {
-            await getWeather();
+        getWeather();
+        setInterval(async () => {
+            getWeather();
         }, 900000);
     }, 0);
 
-    const getWeather = async () =>
-        new Promise((resolve, reject) => {
-            try {
-                const weatherUrl = new URL(
-                    `${config.url}?${new URLSearchParams(config.qs).toString()}`
-                ).toString();
+    const getWeather = async () => {
+        const weatherUrl = new URL(
+            `${config.url}?${new URLSearchParams(config.qs).toString()}`
+        ).toString();
 
-                axios
-                    .get(weatherUrl, { headers: config.headers })
-                    .then((response: WeatherAxiosResponse) => {
-                        if (response.status === "429") {
-                            return reject(response.httpMessage);
-                        }
+        axios
+            .get(weatherUrl, { headers: config.headers })
+            .then((response: WeatherAxiosResponse) => {
+                if (response.status !== "429") {
+                    const { data } = response;
+                    const { features } = data;
 
-                        const { data } = response;
-                        const { features } = data;
+                    if (features) {
+                        data.location = features[0].properties.location.name;
+                        data.days = features[0].properties.timeSeries;
+                        data.day = data.days.filter(
+                            ({ time }) =>
+                                new Date(time).toDateString() ===
+                                new Date().toDateString()
+                        )[0];
 
-                        if (features) {
-                            data.location =
-                                features[0].properties.location.name;
-                            data.days = features[0].properties.timeSeries;
-                            data.day = data.days.filter(
-                                ({ time }) =>
-                                    new Date(time).toDateString() ===
-                                    new Date().toDateString()
-                            )[0];
+                        delete data.type;
+                        delete data.features;
+                        delete data.parameters;
+                    }
 
-                            delete data.type;
-                            delete data.features;
-                            delete data.parameters;
-                        }
-
-                        storage.data = data;
-                        storage.timestamp = new Date().toISOString();
-                    })
-                    .catch((e: AxiosError) => reject(e));
-            } catch (e) {
-                console.log(
-                    `[${new Date()}] Could not get Weather at this time.`
-                );
-            }
-        });
+                    storage.data = data;
+                    storage.timestamp = new Date().toISOString();
+                }
+            });
+        console.log(`[${new Date()}] Could not get Weather at this time.`);
+    };
 
     /*--------------*/
     /*    HANDLER   */
@@ -102,29 +91,26 @@ const weather_routes = (app: Application) => {
 
     app.route("/api/weather").get(async (req, res) => {
         try {
-            if (storage.data) {
-                const { days, day, location } = storage.data;
-                switch (req.query.timeframe) {
-                    case "today":
-                        return res.json({ day, location });
-                    case "week":
-                        return res.json({ days, location });
-                    default:
-                        return res.status(404).json({
-                            message: `No timeframe found: ${
-                                req.query.outlet ||
-                                "Please enter a timeframe query."
-                            }`,
-                        });
-                }
+            const { day, days, location } = storage.data;
+            const { timeframe } = req.query;
+            switch (true) {
+                case timeframe === "today" && day !== null:
+                    return res.json({ day, location });
+                case timeframe === "week" && days !== null:
+                    return res.json({ days, location });
+                default:
+                    throw Error();
             }
-            return res
-                .status(502)
-                .json({ message: "Weather isn't working 🙄" });
         } catch (e: any) {
+            if (!["today", "week"].includes(req.query.timeframe as string)) {
+                return res.status(404).json({
+                    message: `No timeframe found: ${
+                        req.query.timeframe || "Please enter a timeframe query."
+                    }`,
+                });
+            }
             return res.status(502).json({
-                message: `Weather feed ${req.query.timeframe} isn't working! 🙄`,
-                debug: e.toString(),
+                message: `Weather feed '${req.query.timeframe}' isn't working!`,
             });
         }
     });
