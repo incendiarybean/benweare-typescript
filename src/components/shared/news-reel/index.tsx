@@ -39,15 +39,22 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
         return `${display}${allowClick}${animateFirstRenderOnly}`;
     };
 
+    const preloadImages = (data: NewsArticle[]) =>
+        data.forEach((article) => {
+            const img = new Image();
+            img.src = article.img;
+            setLoaded(true);
+        });
+
     useEffect(() => {
         const getNews = async () => {
             fetch(Endpoint)
                 .then((data) => data.json())
                 .then((data) => {
                     setArticles(data);
-                    setLoaded(true);
+                    preloadImages(data);
                 })
-                .catch((e) => {
+                .catch(() => {
                     setLoaded("Failed");
                     sleep(5000).then(getNews);
                 });
