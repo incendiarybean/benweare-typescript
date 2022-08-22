@@ -15,11 +15,11 @@ const news_route = (app: Application) => {
     let nasaRetryCount = 0;
 
     const storage: NewsStorage = {
-        timestamp: undefined,
+        timestamp: null,
         data: {
-            bbc: undefined,
-            pc: undefined,
-            nasa: undefined,
+            bbc: null,
+            pc: null,
+            nasa: null,
         },
     };
 
@@ -37,7 +37,7 @@ const news_route = (app: Application) => {
         }
 
         getNews();
-        setTimeout(() => {
+        setInterval(() => {
             getNews();
         }, 900000);
     }, 0);
@@ -59,7 +59,6 @@ const news_route = (app: Application) => {
     };
 
     const getPCNews = () =>
-        // new Promise((resolve) =>
         axios
             .get("https://www.pcgamer.com/uk/", { responseType: "text" })
             .then((response: AxiosResponse) => {
@@ -115,7 +114,6 @@ const news_route = (app: Application) => {
 
                 pcRetryCount = 0;
                 storage.data.pc = newArticles;
-                // return resolve(newArticles);
             })
             .catch(() => {
                 pcRetryCount += 1;
@@ -127,10 +125,8 @@ const news_route = (app: Application) => {
                 }
                 return getPCNews();
             });
-    // );
 
     const getUKNews: any = () =>
-        // new Promise((resolve) =>
         axios
             .get("https://www.bbc.co.uk/news/england", {
                 responseType: "text",
@@ -208,7 +204,6 @@ const news_route = (app: Application) => {
 
                 ukRetryCount = 0;
                 storage.data.bbc = newArticles;
-                // return resolve(newArticles);
             })
             .catch(() => {
                 ukRetryCount += 1;
@@ -220,10 +215,8 @@ const news_route = (app: Application) => {
                 }
                 return getUKNews();
             });
-    // );
 
     const getNasaImage = () => {
-        // new Promise((resolve) => {
         if (process.env.NASA_API_KEY) {
             axios
                 .get(
@@ -231,7 +224,6 @@ const news_route = (app: Application) => {
                 )
                 .then((response: AxiosResponse) => {
                     storage.data.nasa = response.data;
-                    // return resolve(response.data);
                 })
                 .catch(() => {
                     nasaRetryCount += 1;
@@ -245,7 +237,6 @@ const news_route = (app: Application) => {
                 });
         }
     };
-    // });
 
     /*--------------*/
     /*    HANDLER   */
@@ -253,24 +244,30 @@ const news_route = (app: Application) => {
 
     app.route("/api/news").get((req: Request, res: Response) => {
         try {
-            switch (req.query.outlet) {
-                case "bbc":
-                    return res.json(storage.data.bbc);
-                case "pc":
-                    return res.json(storage.data.pc);
-                case "nasa":
-                    return res.json(storage.data.nasa);
+            const { bbc, pc, nasa } = storage.data;
+            const { outlet } = req.query;
+            switch (true) {
+                case outlet === "bbc" && bbc !== null:
+                    return res.json(bbc);
+                case outlet === "pc" && pc !== null:
+                    return res.json(pc);
+                case outlet === "nasa" && nasa !== null:
+                    return res.json(nasa);
+                case outlet === "lastUpdated":
+                    return res.json({ timestamp: storage.timestamp });
                 default:
-                    return res.status(404).json({
-                        message: `No outlet found: ${
-                            req.query.outlet || "Please enter an outlet query."
-                        }`,
-                    });
+                    throw Error();
             }
         } catch (e: any) {
+            if (!["bbc", "pc", "nasa"].includes(req.query.outlet as string)) {
+                return res.status(404).json({
+                    message: `No news outlet found: ${
+                        req.query.outlet || "Please enter an outlet query."
+                    }`,
+                });
+            }
             return res.status(502).json({
-                message: `News feed ${req.query.outlet} isn't working! 🙄`,
-                debug: e.toString(),
+                message: `News feed '${req.query.outlet}' isn't working!`,
             });
         }
     });

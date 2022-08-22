@@ -1,10 +1,14 @@
 import React, { useEffect, useState, createRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { NavbarProps } from "@lib/types";
 import { ExternalClickHandler } from "src/hooks/externalClickHandler";
 
 function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
-    const [activePageNumber, setActivePageNumber] = useState(0);
+    const [activePageNumber, setActivePageNumber] = useState<number>(0);
+    const [hasBeenNavigated, setHasBeenNavigated] = useState<boolean>(false);
+
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const handlePageNavigation = (pageNumber: number) => {
         setActivePageNumber(pageNumber);
@@ -13,16 +17,26 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
         }
     };
 
+    const setActiveRoute = (route: string) => {
+        if (route === "/") {
+            setActivePageNumber(1);
+        } else setActivePageNumber(0);
+    };
+
     useEffect(() => {
-        const currentPage = window.location.pathname;
-        switch (currentPage) {
-            case "/":
-                setActivePageNumber(1);
-                break;
-            default:
-                break;
+        const storedPath = window.localStorage.getItem("path");
+        if (!storedPath) {
+            window.localStorage.setItem("path", location.pathname);
         }
-    }, []);
+
+        if (hasBeenNavigated) {
+            window.localStorage.setItem("path", location.pathname);
+        } else if (storedPath) {
+            navigate(window.localStorage.getItem("path") as string);
+            setHasBeenNavigated(true);
+        }
+        setActiveRoute(location.pathname);
+    }, [navigate, location.pathname, hasBeenNavigated]);
 
     const navigationElement = createRef<HTMLDivElement>();
     ExternalClickHandler(navigationElement, setMobileMenu);

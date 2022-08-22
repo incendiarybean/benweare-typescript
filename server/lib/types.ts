@@ -116,8 +116,12 @@ export interface WeatherAxiosResponse {
 }
 
 export interface WeatherStorage {
-    timestamp: string | undefined;
-    data: WeatherResponse | undefined;
+    timestamp: string | null;
+    data: {
+        day: WeatherTimeSeries | null;
+        days: WeatherTimeSeries[] | null;
+        location: string | null;
+    };
 }
 
 export interface WeatherConfig {
@@ -140,10 +144,10 @@ export interface NasaArticle {
 }
 
 export interface NewsStorage {
-    timestamp: string | undefined;
+    timestamp: string | null;
     data: {
-        bbc: NewsArticle[] | undefined;
-        pc: NewsArticle[] | undefined;
-        nasa: NasaArticle | undefined;
+        bbc: NewsArticle[] | null;
+        pc: NewsArticle[] | null;
+        nasa: NasaArticle | null;
     };
 }

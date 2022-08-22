@@ -2,5 +2,5 @@
     "execMap": {
         "ts": "ts-node"
     },
-    "ignore": ["src"]
+    "ignore": ["src/**"]
 }

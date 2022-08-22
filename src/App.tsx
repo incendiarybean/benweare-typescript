@@ -1,21 +1,16 @@
-import React, { useState } from "react";
-import { ToastContainer } from "react-toastify";
+import React, { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router } from "react-router-dom";
-import { Navbar, Routes } from "./components";
-import RenderProps from "./TS/props";
+import { Navbar, Routes, Icon } from "./components";
 import "animate.css";
 
-let welcomeCheck = false;
-
 function App() {
-    const props = RenderProps().props;
     const [mobileMenu, setMobileMenu] = useState<boolean>(false);
 
-    if (!welcomeCheck) {
-        props.Notifications.default("👋 Welcome!", "bottom-left");
-        welcomeCheck = true;
-    }
+    useEffect(() => {
+        toast("👋 Welcome!", { position: "bottom-left" });
+    }, []);
 
     return (
         <Router>
@@ -23,7 +18,7 @@ function App() {
                 <ToastContainer />
                 <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 auto-cols-min text-center">
                     <Navbar
-                        {...props}
+                        Icon={Icon}
                         setMobileMenu={setMobileMenu}
                         mobileMenu={mobileMenu}
                     />
@@ -32,7 +27,7 @@ function App() {
                             mobileMenu ? "opacity-40" : "opacity-100"
                         }`}
                     >
-                        <Routes {...props} mobileMenu={mobileMenu} />
+                        <Routes Icon={Icon} mobileMenu={mobileMenu} />
                     </div>
                     <div className="md:hidden w-56 mt-12 divide-y divide-slate-300"></div>
                 </div>

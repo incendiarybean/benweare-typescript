@@ -76,7 +76,11 @@ function Component({ Endpoint, SiteName }: NewsCard) {
                             <div className="p-2">
                                 <iframe
                                     className="w-full rounded-lg h-96"
-                                    src={`https://www.youtube.com/embed/I0578Bzsvaw`}
+                                    src={`https://www.youtube.com/embed/${
+                                        article.url.split("/")[
+                                            article.url.split("/").length - 1
+                                        ]
+                                    }`}
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen

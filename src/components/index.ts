@@ -6,3 +6,4 @@ export { default as NewsCarousel } from "./shared/news-reel";
 export { default as Card } from "./shared/card";
 export { default as Footer } from "./shared/footer";
 export { default as Loader } from "./shared/loader";
+export * as Icon from "./shared/icons";

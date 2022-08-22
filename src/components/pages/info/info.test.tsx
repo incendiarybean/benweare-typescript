@@ -1,11 +1,10 @@
 import React from "react";
 import { act, render, screen } from "@testing-library/react";
 import Component from "./";
-import RenderProps from "../../../TS/props";
-const props = RenderProps().props;
+import { Icon } from "src/components";
 
 test("Name and image displays", () => {
-    render(<Component Icon={props.Icon} />);
+    render(<Component Icon={Icon} />);
     const name = screen.getByText(/Ben Weare/i);
     expect(name).toBeInTheDocument();
 
@@ -14,7 +13,7 @@ test("Name and image displays", () => {
 });
 
 test("Dropdown display of knowledge works.", () => {
-    render(<Component Icon={props.Icon} />);
+    render(<Component Icon={Icon} />);
 
     const expandButton = screen.getByText(/Languages & Experience/i);
     const knowledgeTitle = screen.getByText(/Services\/Environment/i);
