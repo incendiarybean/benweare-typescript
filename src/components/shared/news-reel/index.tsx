@@ -76,11 +76,11 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
                                 target="_blank"
                                 className={`${generateClassName(
                                     index
-                                )}w-full rounded-xl flex-col xl:flex-row bg-white shadow-md transition-all duration-100 md:hover:scale-95 hover:bg-slate-100`}
+                                )}w-full rounded-xl flex-col xl:flex-row flex-wrap bg-white shadow-md transition-all duration-100 md:hover:scale-95 hover:bg-slate-100`}
                             >
-                                <div className="p-2">
+                                <div className="p-2 flex-grow">
                                     <div
-                                        className="rounded-t-xl w-full h-52 md:w-full xl:w-96 shadow-sm rounded-lg bg-cover"
+                                        className="rounded-t-xl w-full h-52 shadow-sm rounded-lg bg-cover"
                                         style={{
                                             backgroundImage: `url(${data.img})`,
                                         }}
@@ -88,10 +88,10 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
                                 </div>
 
                                 <div className="w-full xl:w-1/2 p-3 flex flex-col justify-between h-36 max-h-36 xl:h-auto xl:max-h-max">
-                                    <h1 className="text-left text-sm xl:text-lg text-slate-700 font-bold leading-normal max-h-12">
+                                    <h1 className="text-left text-sm xl:text-lg text-slate-700 font-bold leading-normal h-36 overflow-hidden">
                                         {data.title}
                                     </h1>
-                                    <div className="flex flex-row mt-4">
+                                    <div className="flex flex-row">
                                         <button
                                             onClick={() =>
                                                 window.open(data.link, "_blank")
@@ -100,7 +100,7 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
                                         >
                                             Read Article
                                         </button>
-                                        <div className="flex flex-col w-1/2 md:w-full mt-1">
+                                        <div className="flex flex-col w-1/2 md:w-full">
                                             <h2 className="text-center text-xs mt-2 mb-2 text-blue-600 font-bold uppercase">
                                                 {SiteName} Article
                                             </h2>
