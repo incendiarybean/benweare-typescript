@@ -63,7 +63,7 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
         <div
             ref={navigationElement}
             id={`${SiteName}-news`}
-            className="my-3 px-6 w-full"
+            className="px-2 md:px-6 my-3 w-full"
         >
             <div className="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-gray-300 rounded-xl">
                 {loaded === true && articles && (
@@ -76,11 +76,11 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
                                 target="_blank"
                                 className={`${generateClassName(
                                     index
-                                )}w-full rounded-xl flex-col xl:flex-row flex-wrap bg-white shadow-md transition-all duration-100 md:hover:scale-95 hover:bg-slate-100`}
+                                )}w-full rounded-xl flex-col xl:flex-row bg-white shadow-md transition-all duration-100 md:hover:scale-95 hover:bg-slate-100`}
                             >
                                 <div className="p-2 flex-grow">
                                     <div
-                                        className="rounded-t-xl w-full h-52 shadow-sm rounded-lg bg-cover"
+                                        className="rounded-t-xl w-full md:w-full xl:w-96 h-52 shadow-sm rounded-lg bg-cover"
                                         style={{
                                             backgroundImage: `url(${data.img})`,
                                         }}

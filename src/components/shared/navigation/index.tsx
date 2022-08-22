@@ -39,10 +39,10 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
     ExternalClickHandler(navigationElement, setMobileMenu);
 
     return (
-        <div className="flex justify-end md:mr-4 md:mt-28 w-full">
+        <div className="flex justify-end md:mr-4 md:mt-28 w-full sticky top-0 z-10">
             <div
                 ref={navigationElement}
-                className="bg-white md:bg-gray-200 shadow md:shadow-none select-none group relative md:sticky top-0 w-full md:w-48"
+                className="bg-white md:bg-gray-200 shadow md:shadow-none select-none group relative w-full md:w-48"
             >
                 <button
                     onClick={() => setMobileMenu(!mobileMenu)}

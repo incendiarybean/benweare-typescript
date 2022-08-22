@@ -25,7 +25,7 @@ function Component({ Endpoint, SiteName }: NewsCard) {
     }, [Endpoint, SiteName]);
 
     return (
-        <div className="px-6 my-3 w-full">
+        <div className="px-2 md:px-6 my-3 w-full">
             <div className="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-gray-300 rounded-xl">
                 {loaded === true &&
                     article &&
