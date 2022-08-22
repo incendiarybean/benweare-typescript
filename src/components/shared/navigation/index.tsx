@@ -1,5 +1,5 @@
 import React, { useEffect, useState, createRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NavbarProps } from "@lib/types";
 import { ExternalClickHandler } from "src/hooks/externalClickHandler";
 
@@ -7,11 +7,11 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
     const [activePageNumber, setActivePageNumber] = useState<number>(0);
     const [hasBeenNavigated, setHasBeenNavigated] = useState<boolean>(false);
 
-    const location = useLocation();
     const navigate = useNavigate();
 
     const handlePageNavigation = (pageNumber: number) => {
         setActivePageNumber(pageNumber);
+        setHasBeenNavigated(true);
         if (mobileMenu) {
             setMobileMenu(false);
         }
@@ -24,19 +24,16 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
     };
 
     useEffect(() => {
+        /* TODO: Fix this block, it re-renders the page incorrectly */
         const storedPath = window.localStorage.getItem("path");
-        if (!storedPath) {
-            window.localStorage.setItem("path", location.pathname);
-        }
-
-        if (hasBeenNavigated) {
-            window.localStorage.setItem("path", location.pathname);
-        } else if (storedPath) {
+        if (!hasBeenNavigated && storedPath) {
             navigate(window.localStorage.getItem("path") as string);
             setHasBeenNavigated(true);
         }
-        setActiveRoute(location.pathname);
-    }, [navigate, location.pathname, hasBeenNavigated]);
+
+        window.localStorage.setItem("path", window.location.pathname);
+        setActiveRoute(window.location.pathname);
+    }, [navigate, hasBeenNavigated]);
 
     const navigationElement = createRef<HTMLDivElement>();
     ExternalClickHandler(navigationElement, setMobileMenu);
