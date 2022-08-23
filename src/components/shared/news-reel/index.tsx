@@ -83,39 +83,35 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
                                 target="_blank"
                                 className={`${generateClassName(
                                     index
-                                )}w-full rounded-xl flex-col xl:flex-row bg-white shadow-md transition-all duration-100 md:hover:scale-95 hover:bg-slate-100`}
+                                )}w-full rounded-xl flex-col xl:flex-row bg-white shadow-md transition-all duration-100 md:hover:scale-95`}
                             >
-                                <div className="p-2 flex-grow">
+                                <div className="flex-grow">
                                     <div
-                                        className="rounded-t-xl w-full md:w-full xl:w-96 h-52 shadow-sm rounded-lg bg-cover"
+                                        className="w-full md:w-full xl:w-96 h-64 shadow bg-cover rounded-t-xl xl:rounded-none xl:rounded-l-xl"
                                         style={{
                                             backgroundImage: `url(${data.img})`,
                                         }}
                                     />
                                 </div>
 
-                                <div className="w-full xl:w-1/2 p-3 flex flex-col justify-between h-36 max-h-36 xl:h-auto xl:max-h-max">
-                                    <h1 className="text-left text-sm xl:text-lg text-slate-700 font-bold leading-normal h-36 overflow-hidden">
-                                        {data.title}
-                                    </h1>
-                                    <div className="flex flex-row">
-                                        <button
-                                            onClick={() =>
-                                                window.open(data.link, "_blank")
-                                            }
-                                            className="block md:hidden transition-all duration-100 text-center mt-2 p-2 rounded-md text-white w-1/2 bg-gradient-to-r from-blue-700 to-blue-500 hover:shadow-md hover:from-blue-800 hover:to-blue-600"
-                                        >
-                                            Read Article
-                                        </button>
-                                        <div className="flex flex-col w-1/2 md:w-full">
-                                            <h2 className="text-center text-xs mt-2 mb-2 text-blue-600 font-bold uppercase">
-                                                {SiteName} Article
-                                            </h2>
-                                            <span className="self-center text-xs text-blue-700 -mt-2">
+                                <div className="w-full xl:w-1/2 p-3 flex flex-col justify-between h-40 xl:h-64 overflow-auto">
+                                    <div>
+                                        <div className="flex flex-col md:w-full text-xs text-left">
+                                            <span className="text-blue-700">
                                                 {data.date}
                                             </span>
+                                            <h2 className="text-blue-600 font-bold uppercase text-md">
+                                                News Article
+                                            </h2>
                                         </div>
+                                        <p className="text-left text-sm md:text-lg xl:text-xl text-slate-700 font-bold leading-normal ">
+                                            {data.title}
+                                        </p>
                                     </div>
+                                    <p className="flex text-left text-xs md:text-sm text-blue-700 font-bold leading-normal items-center">
+                                        <Icon.RightCornerArrow />
+                                        {SiteName}
+                                    </p>
                                 </div>
                             </a>
                         ))}

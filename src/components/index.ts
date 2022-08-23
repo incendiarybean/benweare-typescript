@@ -1,3 +1,4 @@
+export { default as Sidebar } from "./shared/sidebar";
 export { default as Navbar } from "./shared/navigation";
 export { default as Info } from "./pages/info";
 export { default as Dashboard } from "./pages/dashboard";
