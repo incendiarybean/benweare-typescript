@@ -41,7 +41,7 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
         <div className="flex justify-end md:pl-2 md:mr-4 w-full md:w-1/4 sticky top-0 z-10 md:min-h-screen">
             <div
                 ref={navigationElement}
-                className="bg-white md:bg-gray-200 shadow md:shadow-none select-none group relative w-full md:w-48 md:mt-28"
+                className="bg-white dark:bg-slate-900 md:bg-gray-200 dark:md:bg-slate-700 shadow md:shadow-none select-none group relative w-full md:w-48 md:mt-28"
             >
                 <button
                     onClick={() => setMobileMenu(!mobileMenu)}
@@ -57,15 +57,17 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
                 </button>
                 <div
                     className={`z-10 absolute w-full md:min-w-fit ${
-                        mobileMenu ? "bg-white shadow-md" : "hidden"
+                        mobileMenu
+                            ? "bg-white dark:bg-slate-700 shadow-md"
+                            : "hidden"
                     } md:grid md:gap-2 `}
                 >
                     <Link
                         to="/dashboard"
                         className={`transition-bg ease-in-out duration-100 ${
                             activePageNumber === 0
-                                ? "text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 font-semibold leading-tight shadow-md"
-                                : "hover:bg-slate-100 hover:shadow-sm"
+                                ? "text-white bg-gradient-to-r from-blue-500 to-blue-700 dark:from-blue-600 dark:to-blue-700 hover:from-blue-600 hover:to-blue-800 font-semibold leading-tight shadow-md"
+                                : "hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm"
                         } w-full md:w-48 h-12 flex items-center md:rounded-md`}
                         onClick={() => handlePageNavigation(0)}
                     >
@@ -82,8 +84,8 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
                         to="/"
                         className={`transition-bg ease-in-out duration-100 ${
                             activePageNumber === 1
-                                ? "text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 font-semibold leading-tight shadow-md"
-                                : "hover:bg-slate-100 hover:shadow-sm"
+                                ? "text-white bg-gradient-to-r from-blue-500 to-blue-700 dark:from-blue-600 dark:to-blue-700 hover:from-blue-600 hover:to-blue-800 font-semibold leading-tight shadow-md"
+                                : "hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm"
                         } w-full md:w-48 h-12 flex items-center md:rounded-md`}
                         onClick={() => handlePageNavigation(1)}
                     >
@@ -100,7 +102,7 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
                         target="_blank"
                         rel="noreferrer"
                         href="https://www.npmjs.com/~incendiarybean"
-                        className="transition-colors ease-in-out duration-100 hover:bg-slate-100 hover:shadow-sm w-full md:w-48 h-12 flex items-center md:rounded-md"
+                        className="transition-colors ease-in-out duration-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm w-full md:w-48 h-12 flex items-center md:rounded-md"
                     >
                         <div className="p-3">
                             <Icon.Packages />
@@ -115,7 +117,7 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
                         target="_blank"
                         rel="noreferrer"
                         href="https://github.com/incendiarybean"
-                        className="transition-colors ease-in-out duration-100 hover:bg-slate-100 hover:shadow-sm w-full md:w-48 h-12 flex items-center md:rounded-md"
+                        className="transition-colors ease-in-out duration-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm w-full md:w-48 h-12 flex items-center md:rounded-md"
                     >
                         <div className="p-3">
                             <Icon.OpenBox />
@@ -130,7 +132,7 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
                         target="_blank"
                         rel="noreferrer"
                         href="https://hub.docker.com/u/incendiarybean"
-                        className="transition-colors ease-in-out duration-100 hover:bg-slate-100 hover:shadow-sm w-full md:w-48 h-12 flex items-center md:rounded-md"
+                        className="transition-colors ease-in-out duration-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm w-full md:w-48 h-12 flex items-center md:rounded-md"
                     >
                         <div className="p-3">
                             <Icon.Box />
@@ -144,7 +146,7 @@ function Component({ Icon, mobileMenu, setMobileMenu }: NavbarProps) {
                         target="_blank"
                         rel="noreferrer"
                         href="/api/docs"
-                        className="transition-colors ease-in-out duration-100 hover:bg-slate-100 hover:shadow-sm w-full md:w-48 h-12 flex items-center md:rounded-md"
+                        className="transition-colors ease-in-out duration-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm w-full md:w-48 h-12 flex items-center md:rounded-md"
                     >
                         <div className="p-3">
                             <Icon.Newspaper />
