@@ -26,12 +26,12 @@ function Component({ Endpoint, SiteName }: NewsCard) {
 
     return (
         <div className="px-2 md:px-6 my-3 w-full">
-            <div className="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-gray-300 rounded-xl">
+            <div className="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-slate-300 dark:border-slate-600 rounded-xl">
                 {loaded === true &&
                     article &&
                     (!article.url.includes("youtube.com") ? (
                         <div
-                            className={`animate__animated animate__fadeIn animate__faster w-full rounded-xl flex-col xl:flex-row bg-white shadow-md`}
+                            className={`animate__animated animate__fadeIn animate__faster w-full rounded-xl flex-col xl:flex-row bg-white dark:bg-slate-900 shadow-md`}
                         >
                             <div
                                 className="rounded-t-xl w-full h-52 shadow-sm bg-cover"
@@ -41,7 +41,7 @@ function Component({ Endpoint, SiteName }: NewsCard) {
                             />
 
                             <div className="w-full p-3 flex flex-col justify-between h-auto md:h-28 overflow-auto lg:h-auto">
-                                <h1 className="text-left text-sm xl:text-lg text-slate-700 font-bold leading-normal ">
+                                <h1 className="text-left text-sm xl:text-lg font-bold leading-normal">
                                     {article.title}
                                 </h1>
                                 <p className="text-sm">{article.explanation}</p>
@@ -56,11 +56,11 @@ function Component({ Endpoint, SiteName }: NewsCard) {
                                         View Full-Size
                                     </button>
                                     <div className="flex flex-col ml-4 w-1/2">
-                                        <h2 className="text-center text-xs mt-1 mb-2 text-blue-600 font-bold uppercase">
+                                        <h2 className="text-center text-xs mt-1 mb-2 text-blue-600 dark:text-blue-400 font-bold uppercase">
                                             {SiteName} Article
                                         </h2>
 
-                                        <span className="self-center text-xs text-blue-700 -mt-2">
+                                        <span className="self-center text-xs text-blue-700 dark:text-blue-300 -mt-2">
                                             {article.date}
                                         </span>
                                     </div>
@@ -72,7 +72,7 @@ function Component({ Endpoint, SiteName }: NewsCard) {
                             href={article.url}
                             rel="noreferrer"
                             target="_blank"
-                            className={`animate__animated animate__fadeIn animate__faster w-full rounded-xl flex-col xl:flex-row bg-white shadow-md transition-all duration-100 hover:bg-slate-100`}
+                            className={`animate__animated animate__fadeIn animate__faster w-full rounded-xl flex-col xl:flex-row bg-white dark:bg-slate-900 shadow-md`}
                         >
                             <div className="p-2">
                                 <iframe
@@ -90,15 +90,16 @@ function Component({ Endpoint, SiteName }: NewsCard) {
                             </div>
 
                             <div className="w-full p-3 flex flex-col justify-between h-56 md:h-28 overflow-auto lg:h-auto">
-                                <h1 className="text-left text-sm xl:text-lg text-slate-700 font-bold leading-normal ">
+                                <h1 className="text-left text-sm xl:text-lg font-bold leading-normal">
                                     {article.title}
                                 </h1>
                                 <p className="text-xs">{article.explanation}</p>
-                                <div className="flex flex-col">
-                                    <h2 className="text-center text-xs mt-2 mb-2 text-blue-600 font-bold uppercase">
+                                <div className="flex flex-col ml-4 w-1/2">
+                                    <h2 className="text-center text-xs mt-1 mb-2 text-blue-600 dark:text-blue-400 font-bold uppercase">
                                         {SiteName} Article
                                     </h2>
-                                    <span className="self-center text-xs text-blue-700 -mt-2">
+
+                                    <span className="self-center text-xs text-blue-700 dark:text-blue-300 -mt-2">
                                         {article.date}
                                     </span>
                                 </div>

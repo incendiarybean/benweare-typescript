@@ -215,7 +215,7 @@ export const Foggy = () => (
 
 export const LoaderSmall = () => (
     <svg
-        className="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-700 "
+        className="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-700"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -235,33 +235,6 @@ export const LoaderSmall = () => (
         />
     </svg>
 );
-
-export const LoaderDots = () => {
-    const circleCommonClasses = "h-5 w-5 bg-current rounded-full bg-blue-400 ";
-
-    return (
-        <div className="self-center flex justify-around flex-col bg-white  px-10 py-20 rounded shadow-lg">
-            <div className="flex self-center p-2">
-                <div
-                    className={`${circleCommonClasses} mr-1 animate-bounce`}
-                ></div>
-                <div
-                    className={`${circleCommonClasses} mr-1 animate-bounce2`}
-                ></div>
-                <div
-                    className={`${circleCommonClasses} mr-1 animate-bounce`}
-                ></div>
-                <div
-                    className={`${circleCommonClasses} mr-1 animate-bounce2`}
-                ></div>
-                <div className={`${circleCommonClasses} animate-bounce`}></div>
-            </div>
-            <p className="font-semibold  text-slate-800  self-center">
-                Loading... Please Wait!
-            </p>
-        </div>
-    );
-};
 
 export const Failed = () => (
     <span className="inline-flex  rounded-full h-6 p-1 py-2 justify-center items-center">

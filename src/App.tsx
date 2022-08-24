@@ -2,34 +2,44 @@ import React, { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router } from "react-router-dom";
-import { Navbar, Routes, Icon } from "./components";
+import { Navbar, Routes, Icon, Sidebar } from "./components";
 import "animate.css";
 
 function App() {
     const [mobileMenu, setMobileMenu] = useState<boolean>(false);
 
     useEffect(() => {
-        toast("👋 Welcome!", { position: "bottom-left" });
+        if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
+            toast.dark("👋 Welcome!", {
+                position: "bottom-left",
+                draggable: true,
+            });
+        } else {
+            toast("👋 Welcome!", { position: "bottom-left", draggable: true });
+        }
     }, []);
 
     return (
         <Router>
-            <div className="">
-                <ToastContainer />
-                <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 auto-cols-min text-center">
+            <ToastContainer />
+            <div className="text-slate-700 dark:text-white bg-gray-200 dark:bg-slate-700">
+                <div className="w-full flex flex-col md:flex-row text-center justify-center">
                     <Navbar
                         Icon={Icon}
                         setMobileMenu={setMobileMenu}
                         mobileMenu={mobileMenu}
                     />
                     <div
-                        className={`md:col-span-2 xl:col-span-1 min-w-fit w-full transition-all duration-150 ${
+                        className={`w-full md:max-w-4xl transition-all duration-150 ${
                             mobileMenu ? "opacity-40" : "opacity-100"
-                        }`}
+                        } overflow-auto md:h-screen border-l border-r border-slate-300 dark:border-slate-600`}
                     >
                         <Routes Icon={Icon} mobileMenu={mobileMenu} />
                     </div>
-                    <div className="md:hidden w-56 mt-12 divide-y divide-slate-300"></div>
+                    <Sidebar />
                 </div>
             </div>
         </Router>

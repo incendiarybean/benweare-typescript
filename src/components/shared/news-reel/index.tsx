@@ -72,7 +72,7 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
             id={`${SiteName}-news`}
             className="px-2 md:px-6 my-3 w-full"
         >
-            <div className="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-gray-300 rounded-xl">
+            <div className="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-slate-300 dark:border-slate-600 rounded-xl">
                 {loaded === true && articles && (
                     <div className="w-full">
                         {articles.map((data, index) => (
@@ -83,47 +83,43 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
                                 target="_blank"
                                 className={`${generateClassName(
                                     index
-                                )}w-full rounded-xl flex-col xl:flex-row bg-white shadow-md transition-all duration-100 md:hover:scale-95 hover:bg-slate-100`}
+                                )}w-full rounded-xl flex-col xl:flex-row bg-white dark:bg-slate-900 shadow-md transition-all duration-100 md:hover:scale-95`}
                             >
-                                <div className="p-2 flex-grow">
+                                <div className="flex-grow">
                                     <div
-                                        className="rounded-t-xl w-full md:w-full xl:w-96 h-52 shadow-sm rounded-lg bg-cover"
+                                        className="w-full md:w-full xl:w-96 h-64 shadow bg-cover rounded-t-xl xl:rounded-none xl:rounded-l-xl"
                                         style={{
                                             backgroundImage: `url(${data.img})`,
                                         }}
                                     />
                                 </div>
 
-                                <div className="w-full xl:w-1/2 p-3 flex flex-col justify-between h-36 max-h-36 xl:h-auto xl:max-h-max">
-                                    <h1 className="text-left text-sm xl:text-lg text-slate-700 font-bold leading-normal h-36 overflow-hidden">
-                                        {data.title}
-                                    </h1>
-                                    <div className="flex flex-row">
-                                        <button
-                                            onClick={() =>
-                                                window.open(data.link, "_blank")
-                                            }
-                                            className="block md:hidden transition-all duration-100 text-center mt-2 p-2 rounded-md text-white w-1/2 bg-gradient-to-r from-blue-700 to-blue-500 hover:shadow-md hover:from-blue-800 hover:to-blue-600"
-                                        >
-                                            Read Article
-                                        </button>
-                                        <div className="flex flex-col w-1/2 md:w-full">
-                                            <h2 className="text-center text-xs mt-2 mb-2 text-blue-600 font-bold uppercase">
-                                                {SiteName} Article
-                                            </h2>
-                                            <span className="self-center text-xs text-blue-700 -mt-2">
+                                <div className="w-full xl:w-1/2 p-3 flex flex-col justify-between h-40 xl:h-64 overflow-auto">
+                                    <div>
+                                        <div className="flex flex-col md:w-full text-xs text-left">
+                                            <span className="text-blue-700 dark:text-blue-300">
                                                 {data.date}
                                             </span>
+                                            <h2 className="text-blue-600 dark:text-blue-400 font-bold uppercase text-md">
+                                                News Article
+                                            </h2>
                                         </div>
+                                        <p className="text-left text-sm md:text-lg xl:text-xl font-bold leading-normal ">
+                                            {data.title}
+                                        </p>
                                     </div>
+                                    <p className="flex text-left text-xs md:text-sm text-blue-700 dark:text-blue-400 font-bold leading-normal items-center">
+                                        <Icon.RightCornerArrow />
+                                        {SiteName}
+                                    </p>
                                 </div>
                             </a>
                         ))}
                         <div className="lg:px-4 w-full mt-2">
                             <div className="flex justify-center">
-                                <div className="bg-white rounded-xl shadow-md flex w-full lg:w-1/2 p-2 justify-between h-12 lg:h-fit items-center">
+                                <div className="bg-white dark:bg-slate-900 rounded-xl shadow-md flex w-full lg:w-1/2 p-2 justify-between h-12 lg:h-fit items-center">
                                     <button
-                                        className="text-slate-500 border-slate-500 hover:text-blue-500 border hover:border-blue-500 w-6 h-6 rounded-xl duration-150 hover:scale-105 active:scale-95"
+                                        className="border-slate-500 dark:border-slate-100 hover:text-blue-500 dark:hover:text-blue-400 border hover:border-blue-500 dark:hover:border-blue-400 w-6 h-6 rounded-xl duration-150 hover:scale-105 active:scale-95"
                                         onClick={() =>
                                             handleRotation(articlePage - 1)
                                         }
@@ -139,13 +135,13 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
                                                 }
                                                 className={`transition-all w-3 self-center duration-150 hover:scale-150 active:scale-125 ease-in-out rounded-md xl:p-1 ${
                                                     index === articlePage
-                                                        ? "bg-blue-500 h-3"
+                                                        ? "bg-blue-400 h-3"
                                                         : "bg-slate-300 h-2"
                                                 } shadow`}
                                             />
                                         ))}
                                     <button
-                                        className="text-slate-500 border-slate-500 hover:text-blue-500 border hover:border-blue-500 w-6 h-6 rounded-xl duration-150 hover:scale-105 active:scale-95"
+                                        className="border-slate-500 dark:border-slate-100 hover:text-blue-500 dark:hover:text-blue-400 border hover:border-blue-500 dark:hover:border-blue-400 w-6 h-6 rounded-xl duration-150 hover:scale-105 active:scale-95"
                                         onClick={() =>
                                             handleRotation(articlePage + 1)
                                         }

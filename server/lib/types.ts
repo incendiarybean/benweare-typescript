@@ -13,9 +13,14 @@ export interface Icons {
     Packages: React.FunctionComponent;
     OpenBox: React.FunctionComponent;
     Box: React.FunctionComponent;
-    Sun: React.FunctionComponent;
     LoaderSmall: React.FunctionComponent;
     Newspaper: React.FunctionComponent;
+    Sun: React.FunctionComponent;
+    Cloud: React.FunctionComponent;
+    Rain: React.FunctionComponent;
+    Foggy: React.FunctionComponent;
+    Thunder: React.FunctionComponent;
+    Snow: React.FunctionComponent;
 }
 
 export interface NewsArticle {
@@ -50,10 +55,15 @@ export interface NewsCarousel {
     Disabled: boolean;
 }
 
-export interface NewsCard {
-    SiteName: string;
+export interface Card {
     Endpoint: string;
 }
+
+export type NewsCard = {
+    SiteName: string;
+} & Card;
+
+export type WeatherCard = Card;
 
 export interface NavbarProps {
     Icon: Icons;
@@ -83,7 +93,54 @@ export interface WeatherFeatures {
 }
 
 export interface WeatherTimeSeries {
-    [key: string]: number | string;
+    time: string;
+    Description: string;
+    WeatherType: string;
+    MaxTemp: string;
+    LowTemp: string;
+    MaxFeels: string;
+    Wind: number;
+    dayLowerBoundMaxFeelsLikeTemp: number;
+    dayLowerBoundMaxTemp: number;
+    dayMaxFeelsLikeTemp: number;
+    dayMaxScreenTemperature: number;
+    dayProbabilityOfHail: number;
+    dayProbabilityOfHeavyRain: number;
+    dayProbabilityOfHeavySnow: number;
+    dayProbabilityOfPrecipitation: number;
+    dayProbabilityOfRain: number;
+    dayProbabilityOfSferics: number;
+    dayProbabilityOfSnow: number;
+    daySignificantWeatherCode: number;
+    dayUpperBoundMaxFeelsLikeTemp: number;
+    dayUpperBoundMaxTemp: number;
+    maxUvIndex: number;
+    midday10MWindDirection: number;
+    midday10MWindGust: number;
+    midday10MWindSpeed: number;
+    middayMslp: number;
+    middayRelativeHumidity: number;
+    middayVisibility: number;
+    midnight10MWindDirection: number;
+    midnight10MWindGust: number;
+    midnight10MWindSpeed: number;
+    midnightMslp: number;
+    midnightRelativeHumidity: number;
+    midnightVisibility: number;
+    nightLowerBoundMinFeelsLikeTemp: number;
+    nightLowerBoundMinTemp: number;
+    nightMinFeelsLikeTemp: number;
+    nightMinScreenTemperature: number;
+    nightProbabilityOfHail: number;
+    nightProbabilityOfHeavyRain: number;
+    nightProbabilityOfHeavySnow: number;
+    nightProbabilityOfPrecipitation: number;
+    nightProbabilityOfRain: number;
+    nightProbabilityOfSferics: number;
+    nightProbabilityOfSnow: number;
+    nightSignificantWeatherCode: number;
+    nightUpperBoundMinFeelsLikeTemp: number;
+    nightUpperBoundMinTemp: number;
 }
 
 export interface WeatherParam {
@@ -133,14 +190,6 @@ export interface WeatherConfig {
     headers: {
         [key: string]: string;
     };
-}
-
-export interface NewsArticle {
-    [key: string]: string;
-}
-
-export interface NasaArticle {
-    [key: string]: string;
 }
 
 export interface NewsStorage {
