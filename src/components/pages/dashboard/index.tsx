@@ -7,7 +7,7 @@ function Component({ Icon, mobileMenu }: BodyProps) {
         <div className="select-none items-center flex flex-col w-full">
             <NewsCarousel
                 Icon={Icon}
-                Endpoint={"/api/news?outlet=pc"}
+                Endpoint={"/api/news?outlet=pcgamer"}
                 SiteName="PCGamer"
                 Disabled={mobileMenu}
             />

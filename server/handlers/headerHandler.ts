@@ -26,4 +26,4 @@ const forceHTTPS = (req: Request, res: Response, next: NextFunction) => {
     next();
 };
 
-export default forceHTTPS;
+module.exports = forceHTTPS;

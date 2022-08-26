@@ -11,8 +11,8 @@ function Component({ Endpoint, SiteName }: NewsCard) {
         const getDetail = async () => {
             fetch(Endpoint)
                 .then((data) => data.json())
-                .then((data) => {
-                    setArticle(data);
+                .then(({ items }) => {
+                    setArticle(items[0]);
                     setLoaded(true);
                 })
                 .catch(() => {

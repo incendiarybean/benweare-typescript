@@ -2,7 +2,7 @@ import { NewsResponse } from "./types";
 
 export const MOCK_WEATHER_RESPONSE = {
     location: "Cinderford",
-    days: [
+    timeseries: [
         {
             time: "2022-08-16T00:00Z",
             midnight10MWindSpeed: 6.22,
@@ -11,6 +11,7 @@ export const MOCK_WEATHER_RESPONSE = {
             midnightVisibility: 14734,
             midnightRelativeHumidity: 89.55,
             midnightMslp: 101240,
+            daySignificantWeatherCode: 5,
             nightSignificantWeatherCode: 7,
             nightMinScreenTemperature: 17.76,
             nightUpperBoundMinTemp: 18.26,
@@ -25,6 +26,12 @@ export const MOCK_WEATHER_RESPONSE = {
             nightProbabilityOfHeavyRain: 2,
             nightProbabilityOfHail: 0,
             nightProbabilityOfSferics: 0,
+            WeatherType: "",
+            Description: "",
+            MaxTemp: "",
+            LowTemp: "",
+            MaxFeels: "",
+            Wind: 2,
         },
         {
             time: "2022-08-03T00:00Z",
@@ -69,31 +76,14 @@ export const MOCK_WEATHER_RESPONSE = {
             nightProbabilityOfHail: 0,
             dayProbabilityOfSferics: 0,
             nightProbabilityOfSferics: 0,
+            WeatherType: "",
+            Description: "",
+            MaxTemp: "",
+            LowTemp: "",
+            MaxFeels: "",
+            Wind: 2,
         },
     ],
-    day: {
-        time: "2022-08-16T00:00Z",
-        midnight10MWindSpeed: 6.22,
-        midnight10MWindDirection: 229,
-        midnight10MWindGust: 12.86,
-        midnightVisibility: 14734,
-        midnightRelativeHumidity: 89.55,
-        midnightMslp: 101240,
-        nightSignificantWeatherCode: 7,
-        nightMinScreenTemperature: 17.76,
-        nightUpperBoundMinTemp: 18.26,
-        nightLowerBoundMinTemp: 16.26,
-        nightMinFeelsLikeTemp: 16.58,
-        nightUpperBoundMinFeelsLikeTemp: 16.58,
-        nightLowerBoundMinFeelsLikeTemp: 14.69,
-        nightProbabilityOfPrecipitation: 10,
-        nightProbabilityOfSnow: 0,
-        nightProbabilityOfHeavySnow: 0,
-        nightProbabilityOfRain: 10,
-        nightProbabilityOfHeavyRain: 2,
-        nightProbabilityOfHail: 0,
-        nightProbabilityOfSferics: 0,
-    },
 };
 
 export const MOCK_BBC_NEWS_RESPONSE = [
@@ -140,6 +130,7 @@ export const MOCK_NASA_NEWS_RESPONSE = {
     service_version: "v1",
     title: "M13: The Great Globular Cluster in Hercules",
     url: "https://apod.nasa.gov/apod/image/2208/M13_final2_sinfirma1024.jpg",
+    site: "NASA",
 };
 
 export const MOCK_NEWS_RESPONSE: NewsResponse = {

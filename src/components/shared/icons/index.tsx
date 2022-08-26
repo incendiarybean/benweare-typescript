@@ -371,7 +371,6 @@ export const RightArrow = () => (
             strokeLinejoin="round"
             transform="translate(2 2)"
         >
-            {/* <circle cx="8.5" cy="8.5" r="8" /> */}
             <path d="m7.5 11.5 3-3-3.068-3" />
         </g>
     </svg>
@@ -392,7 +391,6 @@ export const LeftArrow = () => (
             strokeLinejoin="round"
             transform="translate(2 2)"
         >
-            {/* <circle cx="8.5" cy="8.5" r="8" /> */}
             <path d="m9.55 11.4-3-2.9 3-3" />
         </g>
     </svg>

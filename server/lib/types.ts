@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import React from "react";
 
 /* TYPES FOR CLIENT */
@@ -159,8 +160,7 @@ export interface WeatherParam {
 
 export interface WeatherResponse {
     location: string;
-    days: WeatherTimeSeries[];
-    day: WeatherTimeSeries;
+    timeseries: WeatherTimeSeries[];
     type?: string;
     features?: WeatherFeatures[];
     parameters?: WeatherParam[];
@@ -175,8 +175,7 @@ export interface WeatherAxiosResponse {
 export interface WeatherStorage {
     timestamp: string | null;
     data: {
-        day: WeatherTimeSeries | null;
-        days: WeatherTimeSeries[] | null;
+        timeseries: WeatherTimeSeries[] | null;
         location: string | null;
     };
 }
@@ -200,3 +199,7 @@ export interface NewsStorage {
         nasa: NasaArticle | null;
     };
 }
+
+export type ApiRequest = {
+    message: string;
+} & Request;

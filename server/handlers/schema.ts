@@ -47,49 +47,63 @@ const OpenApiSchema = {
             },
         },
         schemas: {
-            error: {
+            Error: {
                 required: ["message"],
                 properties: {
                     message: { type: "string" },
                 },
             },
-            forbidden: {
-                required: ["message"],
-                properties: {
-                    message: { type: "string" },
-                },
-            },
-            newsOption: {
+            NewsOption: {
                 type: "string",
-                enum: ["bbc", "pc", "nasa"],
+                enum: ["bbc", "pcgamer", "nasa"],
             },
-            news: {
+            Article: {
                 type: "object",
-                oneOf: [
-                    {
-                        properties: {
-                            title: { type: "string" },
-                            link: { type: "string" },
-                            img: { type: "string" },
-                            date: { type: "string" },
-                            site: { type: "string" },
-                        },
-                    },
-                    {
-                        properties: {
-                            copyright: { type: "string" },
-                            date: { type: "string" },
-                            explanation: { type: "string" },
-                            hdurl: { type: "string" },
-                            media_type: { type: "string" },
-                            service_version: { type: "string" },
-                            title: { type: "string" },
-                            url: { type: "string" },
-                        },
-                    },
-                ],
+                properties: {
+                    title: { type: "string" },
+                    link: { type: "string" },
+                    img: { type: "string" },
+                    date: { type: "string" },
+                    site: { type: "string" },
+                },
             },
-            weatherResponse: {
+            NasaArticle: {
+                type: "object",
+                properties: {
+                    copyright: { type: "string" },
+                    date: { type: "string" },
+                    explanation: { type: "string" },
+                    hdurl: { type: "string" },
+                    media_type: { type: "string" },
+                    service_version: { type: "string" },
+                    title: { type: "string" },
+                    url: { type: "string" },
+                },
+            },
+            News: {
+                type: "object",
+                properties: {
+                    items: {
+                        oneOf: [
+                            {
+                                type: "array",
+                                items: {
+                                    $ref: "#/components/schemas/Article",
+                                },
+                            },
+                            {
+                                type: "array",
+                                items: {
+                                    $ref: "#/components/schemas/NasaArticle",
+                                },
+                            },
+                        ],
+                    },
+                    items_length: { type: "number" },
+                    message: { type: "string" },
+                },
+            },
+            WeatherResponse: {
                 type: "object",
                 properties: {
                     time: { type: "string" },
@@ -149,40 +163,30 @@ const OpenApiSchema = {
                     },
                 },
             },
-            weatherOption: {
+            WeatherOption: {
                 type: "string",
-                enum: ["today", "week"],
+                description: "Date in format: YYYY-MM-DD",
             },
-            weather: {
+            Weather: {
                 type: "object",
-                oneOf: [
-                    {
-                        properties: {
-                            location: { type: "string" },
-                            day: {
-                                type: "object",
-                                properties: {
-                                    schema: {
-                                        $ref: "#/components/schemas/weatherResponse",
-                                    },
-                                },
+                properties: {
+                    location: { type: "string" },
+                    items: {
+                        oneOf: [
+                            {
+                                $ref: "#/components/schemas/WeatherResponse",
                             },
-                        },
-                    },
-                    {
-                        properties: {
-                            location: { type: "string" },
-                            days: {
+                            {
                                 type: "array",
-                                properties: {
-                                    schema: {
-                                        $ref: "#/components/schemas/weatherResponse",
-                                    },
+                                items: {
+                                    $ref: "#/components/schemas/WeatherResponse",
                                 },
                             },
-                        },
+                        ],
                     },
-                ],
+                    items_length: { type: "number" },
+                    message: { type: "string" },
+                },
             },
         },
     },
@@ -193,11 +197,10 @@ const OpenApiSchema = {
                 parameters: [
                     {
                         schema: {
-                            $ref: "#/components/schemas/newsOption",
+                            $ref: "#/components/schemas/NewsOption",
                         },
                         in: "query",
                         name: "outlet",
-                        required: true,
                     },
                 ],
                 tags: ["News"],
@@ -208,7 +211,7 @@ const OpenApiSchema = {
                         content: {
                             "application/json": {
                                 schema: {
-                                    $ref: "#/components/schemas/news",
+                                    $ref: "#/components/schemas/News",
                                 },
                             },
                         },
@@ -218,10 +221,7 @@ const OpenApiSchema = {
                         content: {
                             "application/json": {
                                 schema: {
-                                    required: ["message"],
-                                    properties: {
-                                        message: { type: "string" },
-                                    },
+                                    $ref: "#/components/schemas/Error",
                                 },
                             },
                         },
@@ -229,16 +229,16 @@ const OpenApiSchema = {
                 },
             },
         },
-        "/api/weather": {
+        "/api/forecast": {
             get: {
                 parameters: [
                     {
                         schema: {
-                            $ref: "#/components/schemas/weatherOption",
+                            $ref: "#/components/schemas/WeatherOption",
                         },
                         in: "query",
-                        name: "timeframe",
-                        required: true,
+                        name: "date",
+                        description: "Date in format: YYYY-MM-DD",
                     },
                 ],
                 tags: ["Weather"],
@@ -249,7 +249,7 @@ const OpenApiSchema = {
                         content: {
                             "application/json": {
                                 schema: {
-                                    $ref: "#/components/schemas/weather",
+                                    $ref: "#/components/schemas/Weather",
                                 },
                             },
                         },
@@ -259,7 +259,7 @@ const OpenApiSchema = {
                         content: {
                             "application/json": {
                                 schema: {
-                                    $ref: "#/components/schemas/error",
+                                    $ref: "#/components/schemas/Error",
                                 },
                             },
                         },

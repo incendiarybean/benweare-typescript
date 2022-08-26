@@ -5,38 +5,44 @@ describe("Server should return expected JSON from endpoints defined in routeHand
     test.each([
         {
             path: "/api/news?outlet=bbc",
-            keys: ["title", "link", "img", "date", "site"],
+            keys: ["items", "items_length"],
         },
         {
             path: "/api/news?outlet=nasa",
-            keys: [
-                "copyright",
-                "date",
-                "explanation",
-                "hdurl",
-                "media_type",
-                "service_version",
-                "title",
-                "url",
-            ],
+            keys: ["items", "items_length"],
         },
         {
-            path: "/api/news?outlet=pc",
-            keys: ["title", "link", "img", "date", "site"],
+            path: "/api/news?outlet=pcgamer",
+            keys: ["items", "items_length"],
         },
-        { path: "/api/weather?timeframe=today", keys: ["day", "location"] },
-        { path: "/api/weather?timeframe=week", keys: ["days", "location"] },
+        {
+            path: "/api/news",
+            keys: ["items", "items_length"],
+        },
+        {
+            path: "/api/news?query=notaquery",
+            keys: ["items", "items_length"],
+        },
+        {
+            path: "/api/forecast",
+            keys: ["items", "items_length", "location"],
+        },
+        {
+            path: "/api/forecast?date=2022-08-16",
+            keys: ["items", "items_length", "location"],
+        },
+        {
+            path: "/api/forecast?date=16-08-2022",
+            keys: ["items", "items_length", "location", "message"],
+        },
     ])(
         "Expected $path to return an object with keys that match $keys",
         async ({ path, keys }) => {
             const result = await request(server)
                 .get(path)
                 .set("x-forwarded-proto", "https://test.com");
-            expect(
-                Array.isArray(result.body)
-                    ? Object.keys(result.body[0])
-                    : Object.keys(result.body)
-            ).toEqual(keys);
+            console.log(result.body);
+            expect(Object.keys(result.body)).toEqual(keys);
         }
     );
 });

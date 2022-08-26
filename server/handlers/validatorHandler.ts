@@ -1,25 +1,35 @@
-import { Application, NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+
+const express = require("express");
+const router = express.Router();
 
 /**
  * This is to block requests to pages that don't exist, stop API abuse
  * @param app Application - Express app to send response
  */
-const routeValidator = (app: Application) => {
-    const routes = ["/", "/api/news", "/api/weather", "/info", "/favicon.ico"];
-    app.use((req: Request, res: Response, next: NextFunction) => {
-        if (routes.includes(req.path)) {
-            return next();
-        }
+router.use((req: Request, res: Response, next: NextFunction) => {
+    // TODO: There is definitely a better way of doing this.
+    const routes = [
+        "/",
+        "/api/news",
+        "/api/news/bbc",
+        "/api/news/nasa",
+        "/api/news/pc",
+        "/api/forecast",
+        "/info",
+        "/favicon.ico",
+    ];
 
-        if (req.path.includes("/api/")) {
-            return res
-                .status(404)
-                .json({
-                    message: `${req.method} is not defined on ${req.path}`,
-                });
-        }
+    if (routes.includes(req.path)) {
         return next();
-    });
-};
+    }
 
-export default routeValidator;
+    if (req.path.includes("/api/")) {
+        return res.status(404).json({
+            message: `${req.method} is not defined on ${req.path}`,
+        });
+    }
+    return next();
+});
+
+module.exports = router;
