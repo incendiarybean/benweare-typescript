@@ -10,20 +10,23 @@ const express = require("express"),
 /*    HANDLER   */
 /*--------------*/
 
-router.use((req: ApiRequest, res: Response, next: NextFunction) => {
-    const { outlet } = req.query;
-    const possibleOutlets = ["bbc", "nasa", "pcgamer"];
+router.use(
+    "/api/news",
+    (req: ApiRequest, res: Response, next: NextFunction) => {
+        const { outlet } = req.query;
+        const possibleOutlets = ["bbc", "nasa", "pcgamer"];
 
-    if (!outlet) {
-        req.query = {};
+        if (!outlet) {
+            req.query = {};
+        }
+
+        if (outlet && !possibleOutlets.includes(outlet as string)) {
+            req.message = `No outlet found: ${outlet?.toString()}`;
+        }
+
+        return next();
     }
-
-    if (outlet && !possibleOutlets.includes(outlet as string)) {
-        req.message = `No outlet found: ${outlet?.toString()}`;
-    }
-
-    return next();
-});
+);
 
 router.get("/api/news", (req: ApiRequest, res: Response) => {
     try {

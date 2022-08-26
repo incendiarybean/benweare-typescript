@@ -10,19 +10,22 @@ const express = require("express"),
 /*    HANDLER   */
 /*--------------*/
 
-router.use((req: ApiRequest, res: Response, next: NextFunction) => {
-    const { date } = req.query;
+router.use(
+    "/api/forecast",
+    (req: ApiRequest, res: Response, next: NextFunction) => {
+        const { date } = req.query;
 
-    if (!date) {
-        req.query = {};
+        if (!date) {
+            req.query = {};
+        }
+
+        if (date && !Fetch.isCorrectDateFormat(date)) {
+            req.message = "Date should be in format: YYYY-MM-DD";
+        }
+
+        return next();
     }
-
-    if (date && !Fetch.isCorrectDateFormat(date)) {
-        req.message = "Date should be in format: YYYY-MM-DD";
-    }
-
-    return next();
-});
+);
 
 router.get("/api/forecast", (req: ApiRequest, res: Response) => {
     try {
