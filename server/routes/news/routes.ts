@@ -25,7 +25,7 @@ router.use((req: ApiRequest, res: Response, next: NextFunction) => {
     return next();
 });
 
-router.get("/", (req: ApiRequest, res: Response) => {
+router.get("/api/news", (req: ApiRequest, res: Response) => {
     try {
         const { bbc, pc, nasa } = storage.data;
         const { outlet } = req.query;

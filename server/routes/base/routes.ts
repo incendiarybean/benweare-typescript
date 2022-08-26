@@ -8,7 +8,7 @@ const router = express.Router();
 /*    HANDLER   */
 /*--------------*/
 
-const index = `${process.env.APP_PATH}/index.html`;
+const index = `../${process.env.APP_PATH}/index.html`;
 
 router
     .route("/")

@@ -24,7 +24,7 @@ router.use((req: ApiRequest, res: Response, next: NextFunction) => {
     return next();
 });
 
-router.get("/", (req: ApiRequest, res: Response) => {
+router.get("/api/forecast", (req: ApiRequest, res: Response) => {
     try {
         const { timeseries, location } = storage.data;
         const { date } = req.query;
