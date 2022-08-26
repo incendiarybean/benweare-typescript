@@ -57,6 +57,13 @@ const getNews = () => {
     storage.timestamp = new Date().toISOString();
 };
 
+/**
+ *
+ * @param url URL of the site you wish to fetch from
+ * @param containerSelector QuerySelector you wish to grab articles from
+ * @param splitSelector QuerySelector used to identify and split each article
+ * @returns HTMLArticles[], an array of elements depending on your above selection
+ */
 const fetchArticles = (
     url: string,
     containerSelector: string,

@@ -9,16 +9,7 @@ const router = express.Router();
  */
 router.use((req: Request, res: Response, next: NextFunction) => {
     // TODO: There is definitely a better way of doing this.
-    const routes = [
-        "/",
-        "/api/news",
-        "/api/news/bbc",
-        "/api/news/nasa",
-        "/api/news/pc",
-        "/api/forecast",
-        "/info",
-        "/favicon.ico",
-    ];
+    const routes = ["/", "/api/news", "/api/forecast", "/info", "/favicon.ico"];
 
     if (routes.includes(req.path)) {
         return next();
