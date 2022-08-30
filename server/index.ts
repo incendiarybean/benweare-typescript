@@ -27,10 +27,10 @@ export const server: Server = require("http")
     });
 
 // SET CONTENT RULES \\
-contentHandler(app);
+app.use(contentHandler);
 
 // VALIDATE ROUTE \\
-validatorHandler(app);
+app.use(validatorHandler);
 
 // USE ROUTES \\
-routeHandler(app);
+app.use(routeHandler);

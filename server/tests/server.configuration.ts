@@ -11,13 +11,13 @@ const app = express();
 app.use(headerHandler);
 
 // SET CONTENT RULES \\
-contentHandler(app);
+app.use(contentHandler);
 
 // VALIDATE ROUTE \\
-validatorHandler(app);
+app.use(validatorHandler);
 
 // USE ROUTES \\
-routeHandler(app);
+app.use(routeHandler);
 
 console.log = () => {};
 

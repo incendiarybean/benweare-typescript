@@ -50,9 +50,9 @@ function Component({ Icon, Endpoint, SiteName, Disabled }: NewsCarousel) {
         const getNews = async () => {
             fetch(Endpoint)
                 .then((data) => data.json())
-                .then((data) => {
-                    setArticles(data);
-                    preloadImages(data);
+                .then(({ items }) => {
+                    setArticles(items);
+                    preloadImages(items);
                 })
                 .catch(() => {
                     setLoaded("Failed");

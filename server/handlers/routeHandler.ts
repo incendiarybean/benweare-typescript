@@ -1,10 +1,9 @@
-import { Application } from "express";
-import { news_routes, base_routes, weather_routes } from "../routes";
+const express = require("express");
+const router = express.Router();
+const routes = require("../routes");
 
-const routeHandler = (app: Application) => {
-    news_routes(app);
-    weather_routes(app);
-    base_routes(app);
-};
+router.use(routes.news_routes);
+router.use(routes.weather_routes);
+router.use(routes.base_routes);
 
-export default routeHandler;
+module.exports = router;
