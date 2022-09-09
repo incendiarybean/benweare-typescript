@@ -22,7 +22,8 @@
         "allowUnusedLabels": false,
         "allowUnreachableCode": false,
         "skipLibCheck": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "typeRoots": ["./lib/*"]
     },
     "exclude": ["tests/**"]
 }

@@ -1,19 +1,18 @@
+import axios, { AxiosResponse } from "axios";
 import { MOCK_WEATHER_RESPONSE } from "../../lib/resource-data";
 import {
-    WeatherStorage,
-    WeatherAxiosResponse,
-    WeatherResponse,
     WeatherConfig,
+    WeatherResponse,
+    WeatherStorage,
     WeatherTimeSeries,
 } from "../../lib/types";
-
-const axios = require("axios");
+import { IO } from "../..";
 
 /*--------------*/
 /*    CONFIG    */
 /*--------------*/
 
-const storage: WeatherStorage = {
+export const storage: WeatherStorage = {
     timestamp: null,
     data: { timeseries: null, location: null },
 };
@@ -122,21 +121,21 @@ const weatherCode = (code: number) => {
     }
 };
 
-const getWeather = () => {
+export const getWeather = () => {
     const weatherUrl = new URL(
         `${config.url}?${new URLSearchParams(config.qs).toString()}`
     ).toString();
 
     axios
         .get(weatherUrl, { headers: config.headers })
-        .then((response: WeatherAxiosResponse) => {
-            if (response.status !== "429") {
+        .then((response: AxiosResponse) => {
+            if (response.status !== 429) {
                 const { data } = response;
                 const { features } = data;
 
                 if (features) {
                     features[0].properties.timeSeries =
-                        features[0].properties.timeSeries.map((day) => {
+                        features[0].properties.timeSeries.map((day: any) => {
                             const [type, description] = weatherCode(
                                 day.daySignificantWeatherCode
                             );
@@ -166,22 +165,16 @@ const getWeather = () => {
 
                 storage.data = data;
                 storage.timestamp = new Date().toISOString();
+                IO.local.emit("RELOAD_WEATHER");
             }
         });
 };
 
-const isCorrectDateFormat = (date: string) =>
+export const isCorrectDateFormat = (date: string) =>
     date.match(/[0-9]{4}-[0-9]{2}-[0-9]{2}/);
 
-const getDayByDate = (date: string, timeseries: WeatherTimeSeries[]) =>
+export const getDayByDate = (date: string, timeseries: WeatherTimeSeries[]) =>
     timeseries.filter(
         (day: WeatherTimeSeries) =>
             new Date(day.time).toISOString() === new Date(date).toISOString()
     );
-
-module.exports = {
-    getWeather,
-    getDayByDate,
-    isCorrectDateFormat,
-    storage,
-};

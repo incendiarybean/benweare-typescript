@@ -1,3 +1,5 @@
+import { OpenAPIV3 } from "openapi-types";
+
 const getServers = () => {
     if (process.env.NODE_ENV === "production") {
         return [
@@ -19,7 +21,7 @@ const getServers = () => {
     ];
 };
 
-const OpenApiSchema = {
+const OpenApiSchema: OpenAPIV3.Document = {
     openapi: "3.0.0",
     info: {
         title: "benweare.co.uk's base API",

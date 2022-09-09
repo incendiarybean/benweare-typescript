@@ -1,7 +1,7 @@
+import path from "path";
 import { Request, Response } from "express";
+import express from "express";
 
-const path = require("path");
-const express = require("express");
 const router = express.Router();
 
 /*--------------*/
@@ -34,4 +34,4 @@ router
         });
     });
 
-module.exports = router;
+export default router;

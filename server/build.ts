@@ -1,5 +1,5 @@
-const exec = require("child_process").exec;
-const os = require("os");
+import { exec } from "child_process";
+import os from "os";
 
 console.log("Moving client files...");
 if (os.type() === "Linux") {

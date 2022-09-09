@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
-const express = require("express");
+import express from "express";
+
 const router = express.Router();
 
 /**
@@ -23,4 +24,4 @@ router.use((req: Request, res: Response, next: NextFunction) => {
     return next();
 });
 
-module.exports = router;
+export default router;

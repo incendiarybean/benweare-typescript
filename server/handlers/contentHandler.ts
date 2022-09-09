@@ -1,16 +1,10 @@
+import path from "path";
+import cors from "cors";
+import express from "express";
+import * as swaggerUi from "swagger-ui-slim";
 import schema from "./schema";
 
-const cors = require("cors");
-const express = require("express");
-const path = require("path");
-const swaggerUi = require("swagger-ui-slim");
 const router = express.Router();
-
-/**
- * This is purely to configure the static paths and CORS
- * @param app Application - for configuring static files and CORS
- */
-console.log(`[${new Date()}] Configuring CORS...`);
 
 router.use(
     cors({
@@ -36,4 +30,4 @@ router.use(
     })
 );
 
-module.exports = router;
+export default router;

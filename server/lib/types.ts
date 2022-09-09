@@ -1,4 +1,3 @@
-import { Request } from "express";
 import React from "react";
 
 /* TYPES FOR CLIENT */
@@ -41,6 +40,7 @@ export interface NasaArticle {
     service_version: string;
     title: string;
     url: string;
+    site: string;
 }
 
 export interface NewsResponse {
@@ -199,7 +199,3 @@ export interface NewsStorage {
         nasa: NasaArticle | null;
     };
 }
-
-export type ApiRequest = {
-    message: string;
-} & Request;
