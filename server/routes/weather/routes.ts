@@ -1,7 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import express from "express";
-import * as Fetch from "./collector";
-import { storage } from "./collector";
+import { getDayByDate, isCorrectDateFormat, storage } from "./collector";
 
 const router = express.Router();
 
@@ -18,7 +17,7 @@ router.use(
             req.query = {};
         }
 
-        if (date && !Fetch.isCorrectDateFormat(date as string)) {
+        if (date && !isCorrectDateFormat(date as string)) {
             req.message = "Date should be in format: YYYY-MM-DD";
         }
 
@@ -39,10 +38,7 @@ router.get("/api/forecast", (req: Request, res: Response) => {
         let selectedTimeseries = timeseries;
         if (date) {
             try {
-                selectedTimeseries = Fetch.getDayByDate(
-                    date.toString(),
-                    timeseries
-                );
+                selectedTimeseries = getDayByDate(date.toString(), timeseries);
             } catch (e: any) {
                 req.message = "Date should be in format: YYYY-MM-DD";
             }
