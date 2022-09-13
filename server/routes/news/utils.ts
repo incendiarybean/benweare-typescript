@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
 import axios from "axios";
 import { JSDOM } from "jsdom";
-import { MOCK_NEWS_RESPONSE } from "../../lib/resource-data";
-import { NewsArticle, NewsStorage } from "../../lib/types";
+import { NewsArticle, NewsStorage } from "@lib/types";
+import { MOCK_NEWS_RESPONSE } from "@resources/data/news";
 import { IO } from "../..";
 
 /*--------------*/
@@ -23,7 +23,7 @@ export const storage: NewsStorage = {
 };
 
 /*--------------*/
-/*   ACTIONS    */
+/*    EVENTS    */
 /*--------------*/
 
 setTimeout(() => {
@@ -40,6 +40,10 @@ setTimeout(() => {
         getNews();
     }, 480000);
 }, 0);
+
+/*--------------*/
+/* INTERACTIONS */
+/*--------------*/
 
 export const getNews = () => {
     getPCNews();

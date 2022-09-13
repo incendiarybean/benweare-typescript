@@ -4,12 +4,16 @@
     "private": true,
     "main": "./dist/index.js",
     "dependencies": {
+        "@discordjs/voice": "^0.11.0",
         "animate.css": "^4.1.1",
         "axios": "^0.27.2",
         "cors": "^2.8.5",
+        "discord.js": "^14.3.0",
         "dotenv": "^16.0.1",
         "express": "^4.18.1",
+        "ffmpeg-static": "^5.1.0",
         "jsdom": "^20.0.0",
+        "libsodium-wrappers": "^0.7.10",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.3.0",
@@ -24,7 +28,7 @@
     "scripts": {
         "start": "node -r dotenv/config .",
         "start-client": "react-scripts start",
-        "start-dev": "nodemon -r dotenv/config ./server/index.ts",
+        "start-dev": "nodemon ./server/index.ts",
         "build": "react-scripts build && tsc --p ./server && node ./dist/build.js",
         "build-client": "react-scripts build",
         "test": "react-scripts test --watchAll=false --silent && jest ./server/* --silent --runInBand"
@@ -60,6 +64,7 @@
         "@types/node": "^18.7.6",
         "@types/react": "^18.0.17",
         "@types/react-dom": "^18.0.6",
+        "@types/supertest": "^2.0.12",
         "@types/swagger-ui-dist": "^3.30.1",
         "@typescript-eslint/eslint-plugin": "^5.33.1",
         "autoprefixer": "^10.4.8",
@@ -76,6 +81,7 @@
         "supertest": "^6.2.4",
         "tailwindcss": "^3.1.8",
         "ts-jest": "^28.0.8",
-        "ts-node": "^10.9.1"
+        "ts-node": "^10.9.1",
+        "tsconfig-paths": "^4.1.0"
     }
 }

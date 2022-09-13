@@ -1,7 +1,14 @@
 import express from "express";
-import { baseRoutes, newsRoutes, weatherRoutes } from "../routes";
+import {
+    baseRoutes,
+    discordRoutes,
+    newsRoutes,
+    weatherRoutes,
+} from "../routes";
 
 const router = express.Router();
+
+discordRoutes();
 
 router.use(newsRoutes);
 router.use(weatherRoutes);

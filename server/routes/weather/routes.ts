@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import express from "express";
-import { getDayByDate, isCorrectDateFormat, storage } from "./collector";
+import { getDayByDate, isCorrectDateFormat, storage } from "./utils";
 
 const router = express.Router();
 

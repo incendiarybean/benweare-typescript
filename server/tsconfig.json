@@ -23,7 +23,14 @@
         "allowUnreachableCode": false,
         "skipLibCheck": true,
         "resolveJsonModule": true,
-        "typeRoots": ["./lib/*"]
+        "paths": {
+            "@resources/*": ["./resources/*"],
+            "@handlers": ["./handlers"],
+            "@lib/types": ["./lib/types.ts"]
+        }
+    },
+    "ts-node": {
+        "files": true
     },
     "exclude": ["tests/**"]
 }

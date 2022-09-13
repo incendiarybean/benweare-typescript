@@ -5,7 +5,6 @@ import {
     contentHandler,
     headerHandler,
     routeHandler,
-    socketHandler,
     validatorHandler,
 } from "./handlers";
 
@@ -32,9 +31,6 @@ export const IO = new Server(HTTPServer, {
         methods: ["GET"],
     },
 });
-
-// SET SOCKET \\
-socketHandler();
 
 // SET CORS RULES \\
 app.use(headerHandler);

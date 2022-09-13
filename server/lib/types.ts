@@ -1,3 +1,4 @@
+import { CacheType, CommandInteractionOption } from "discord.js";
 import React from "react";
 
 /* TYPES FOR CLIENT */
@@ -199,3 +200,17 @@ export interface NewsStorage {
         nasa: NasaArticle | null;
     };
 }
+
+export type DiscordUsernameOptions =
+    | {
+          user: {
+              id: string;
+              bot: boolean;
+              system: boolean;
+              username: string;
+              discriminator: string;
+              avatar: string;
+              banner: undefined | string;
+              accentColor: undefined | string;
+          };
+      } & CommandInteractionOption<CacheType>;

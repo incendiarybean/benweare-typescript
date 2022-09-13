@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from "axios";
-import { MOCK_WEATHER_RESPONSE } from "../../lib/resource-data";
 import {
     WeatherConfig,
     WeatherResponse,
     WeatherStorage,
     WeatherTimeSeries,
-} from "../../lib/types";
+} from "@lib/types";
+import { MOCK_WEATHER_RESPONSE } from "@resources/data/weather";
 import { IO } from "../..";
 
 /*--------------*/
@@ -33,7 +33,7 @@ const config: WeatherConfig = {
 };
 
 /*--------------*/
-/*   ACTIONS    */
+/*    EVENTS    */
 /*--------------*/
 
 setTimeout(() => {
@@ -50,6 +50,10 @@ setTimeout(() => {
         getWeather();
     }, 900000);
 }, 0);
+
+/*--------------*/
+/* INTERACTIONS */
+/*--------------*/
 
 const weatherCode = (code: number) => {
     switch (code) {
