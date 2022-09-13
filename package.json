@@ -29,7 +29,7 @@
         "start": "node -r dotenv/config .",
         "start-client": "react-scripts start",
         "start-dev": "nodemon ./server/index.ts",
-        "build": "react-scripts build && tsc --p ./server && node ./dist/build.js",
+        "build": "react-scripts build && tsc -p ./server && tsc-alias -p ./server/tsconfig.json && node ./dist/build.js",
         "build-client": "react-scripts build",
         "test": "react-scripts test --watchAll=false --silent && jest ./server/* --silent --runInBand"
     },
@@ -82,6 +82,7 @@
         "tailwindcss": "^3.1.8",
         "ts-jest": "^28.0.8",
         "ts-node": "^10.9.1",
+        "tsc-alias": "^1.7.0",
         "tsconfig-paths": "^4.1.0"
     }
 }
