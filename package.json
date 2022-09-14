@@ -29,7 +29,7 @@
         "start": "node -r dotenv/config .",
         "start-client": "react-scripts start",
         "start-dev": "nodemon ./server/index.ts",
-        "build": "react-scripts build && tsc -p ./server && tsc-alias -p ./server/tsconfig.json && node ./dist/build.js",
+        "build": "webpack && node ./dist/build.js",
         "build-client": "react-scripts build",
         "test": "react-scripts test --watchAll=false --silent && jest ./server/* --silent --runInBand"
     },
@@ -81,8 +81,12 @@
         "supertest": "^6.2.4",
         "tailwindcss": "^3.1.8",
         "ts-jest": "^28.0.8",
+        "ts-loader": "^9.3.1",
         "ts-node": "^10.9.1",
         "tsc-alias": "^1.7.0",
-        "tsconfig-paths": "^4.1.0"
+        "tsconfig-paths": "^4.1.0",
+        "webpack": "^5.74.0",
+        "webpack-cli": "^4.10.0",
+        "webpack-node-externals": "^3.0.0"
     }
 }
