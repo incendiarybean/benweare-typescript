@@ -24,7 +24,15 @@ client.on("interactionCreate", async (interaction) => {
 
     switch (interaction.customId) {
         case "ClearDiceRoll":
-            await interaction.message.delete();
+            try {
+                await interaction.message.delete();
+            } catch (e) {
+                interaction.reply({
+                    content:
+                        "Dimiss button has already been clicked, dismiss me!",
+                    ephemeral: true,
+                });
+            }
             break;
     }
 });
