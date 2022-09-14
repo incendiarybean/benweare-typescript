@@ -22,7 +22,15 @@
         "allowUnusedLabels": false,
         "allowUnreachableCode": false,
         "skipLibCheck": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "paths": {
+            "@resources/*": ["./resources/*"],
+            "@handlers": ["./handlers"],
+            "@lib/types": ["./lib/types.ts"]
+        }
+    },
+    "ts-node": {
+        "files": true
     },
     "exclude": ["tests/**"]
 }

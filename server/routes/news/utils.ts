@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios";
-import { MOCK_NEWS_RESPONSE } from "../../lib/resource-data";
-import { NewsArticle, NewsStorage } from "../../lib/types";
-
-const axios = require("axios");
-const { JSDOM } = require("jsdom");
+import axios from "axios";
+import { JSDOM } from "jsdom";
+import { NewsArticle, NewsStorage } from "@lib/types";
+import { MOCK_NEWS_RESPONSE } from "@resources/data/news";
+import { IO } from "../..";
 
 /*--------------*/
 /*    CONFIG    */
@@ -13,17 +13,17 @@ let pcRetryCount = 0;
 let ukRetryCount = 0;
 let nasaRetryCount = 0;
 
-const storage: NewsStorage = {
+export const storage: NewsStorage = {
     timestamp: null,
     data: {
-        bbc: null,
         pc: null,
+        bbc: null,
         nasa: null,
     },
 };
 
 /*--------------*/
-/*   ACTIONS    */
+/*    EVENTS    */
 /*--------------*/
 
 setTimeout(() => {
@@ -38,8 +38,19 @@ setTimeout(() => {
     getNews();
     setInterval(() => {
         getNews();
-    }, 900000);
+    }, 480000);
 }, 0);
+
+/*--------------*/
+/* INTERACTIONS */
+/*--------------*/
+
+export const getNews = () => {
+    getPCNews();
+    getUKNews();
+    getNasaImage();
+    storage.timestamp = new Date().toISOString();
+};
 
 const generateDate = (date: string | undefined | null) => {
     const newDate = date ? new Date(date) : new Date();
@@ -48,13 +59,6 @@ const generateDate = (date: string | undefined | null) => {
         return new Date().toLocaleDateString("en-UK");
     }
     return newDate.toLocaleDateString("en-UK");
-};
-
-const getNews = () => {
-    getPCNews();
-    getUKNews();
-    getNasaImage();
-    storage.timestamp = new Date().toISOString();
 };
 
 /**
@@ -133,6 +137,7 @@ const getPCNews = () =>
             });
             pcRetryCount = 0;
             storage.data.pc = Articles;
+            IO.local.emit("RELOAD_NEWS");
         })
         .catch(() => {
             pcRetryCount += 1;
@@ -201,6 +206,7 @@ const getUKNews: any = () =>
             });
             ukRetryCount = 0;
             storage.data.bbc = Articles;
+            IO.local.emit("RELOAD_NEWS");
         })
         .catch(() => {
             ukRetryCount += 1;
@@ -234,11 +240,4 @@ const getNasaImage = () => {
                 return getNasaImage();
             });
     }
-};
-
-module.exports = {
-    getNews,
-    getPCNews,
-    getNasaImage,
-    storage,
 };

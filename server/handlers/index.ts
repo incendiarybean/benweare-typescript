@@ -1,11 +1,4 @@
-const contentHandler = require("./contentHandler");
-const headerHandler = require("./headerHandler");
-const validatorHandler = require("./validatorHandler");
-const routeHandler = require("./routeHandler");
-
-module.exports = {
-    contentHandler,
-    headerHandler,
-    validatorHandler,
-    routeHandler,
-};
+export { default as contentHandler } from "./contentHandler";
+export { default as headerHandler } from "./headerHandler";
+export { default as validatorHandler } from "./validatorHandler";
+export { default as routeHandler } from "./routeHandler";

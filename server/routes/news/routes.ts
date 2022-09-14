@@ -1,34 +1,29 @@
-import type { NextFunction, Response } from "express";
-import type { ApiRequest } from "../../lib/types";
+import type { NextFunction, Request, Response } from "express";
+import express from "express";
+import { storage } from "./utils";
 
-const express = require("express"),
-    router = express.Router(),
-    Fetch = require("./collector"),
-    storage = Fetch.storage;
+const router = express.Router();
 
 /*--------------*/
 /*    HANDLER   */
 /*--------------*/
 
-router.use(
-    "/api/news",
-    (req: ApiRequest, res: Response, next: NextFunction) => {
-        const { outlet } = req.query;
-        const possibleOutlets = ["bbc", "nasa", "pcgamer"];
+router.use("/api/news", (req: Request, res: Response, next: NextFunction) => {
+    const { outlet } = req.query;
+    const possibleOutlets = ["bbc", "nasa", "pcgamer"];
 
-        if (!outlet) {
-            req.query = {};
-        }
-
-        if (outlet && !possibleOutlets.includes(outlet as string)) {
-            req.message = `No outlet found: ${outlet?.toString()}`;
-        }
-
-        return next();
+    if (!outlet) {
+        req.query = {};
     }
-);
 
-router.get("/api/news", (req: ApiRequest, res: Response) => {
+    if (outlet && !possibleOutlets.includes(outlet as string)) {
+        req.message = `No outlet found: ${outlet?.toString()}`;
+    }
+
+    return next();
+});
+
+router.get("/api/news", (req: Request, res: Response) => {
     try {
         const { bbc, pc, nasa } = storage.data;
         const { outlet } = req.query;
@@ -53,11 +48,10 @@ router.get("/api/news", (req: ApiRequest, res: Response) => {
             message,
         });
     } catch (e: any) {
-        console.log(e);
         return res.status(502).json({
             message: `News feed isn't working!`,
         });
     }
 });
 
-module.exports = router;
+export default router;

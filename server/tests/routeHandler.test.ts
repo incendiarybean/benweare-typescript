@@ -1,5 +1,5 @@
-import server from "./server.configuration";
-const request = require("supertest");
+import request from "supertest";
+import { HTTPServer, app } from "..";
 
 describe("Server should return expected JSON from endpoints defined in routeHandler.", () => {
     test.each([
@@ -38,10 +38,10 @@ describe("Server should return expected JSON from endpoints defined in routeHand
     ])(
         "Expected $path to return an object with keys that match $keys",
         async ({ path, keys }) => {
-            const result = await request(server)
+            const result = await request(app)
                 .get(path)
                 .set("x-forwarded-proto", "https://test.com");
-            console.log(result.body);
+            HTTPServer.close();
             expect(Object.keys(result.body)).toEqual(keys);
         }
     );

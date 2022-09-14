@@ -1,4 +1,5 @@
-import { Request } from "express";
+import { AxiosRequestHeaders } from "axios";
+import { CacheType, CommandInteractionOption } from "discord.js";
 import React from "react";
 
 /* TYPES FOR CLIENT */
@@ -41,6 +42,7 @@ export interface NasaArticle {
     service_version: string;
     title: string;
     url: string;
+    site: string;
 }
 
 export interface NewsResponse {
@@ -186,9 +188,7 @@ export interface WeatherConfig {
     qs: {
         [key: string]: string;
     };
-    headers: {
-        [key: string]: string;
-    };
+    headers: WeatherRequestHeaders;
 }
 
 export interface NewsStorage {
@@ -200,6 +200,22 @@ export interface NewsStorage {
     };
 }
 
-export type ApiRequest = {
-    message: string;
-} & Request;
+export type DiscordUsernameOptions =
+    | {
+          user: {
+              id: string;
+              bot: boolean;
+              system: boolean;
+              username: string;
+              discriminator: string;
+              avatar: string;
+              banner: undefined | string;
+              accentColor: undefined | string;
+          };
+      } & CommandInteractionOption<CacheType>;
+
+export type WeatherRequestHeaders = {
+    "x-ibm-client-id": string;
+    "x-ibm-client-secret": string;
+    accept: string;
+} & AxiosRequestHeaders;
