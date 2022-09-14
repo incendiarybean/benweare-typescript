@@ -1,3 +1,4 @@
+import { AxiosRequestHeaders } from "axios";
 import { CacheType, CommandInteractionOption } from "discord.js";
 import React from "react";
 
@@ -187,9 +188,7 @@ export interface WeatherConfig {
     qs: {
         [key: string]: string;
     };
-    headers: {
-        [key: string]: string;
-    };
+    headers: WeatherRequestHeaders;
 }
 
 export interface NewsStorage {
@@ -214,3 +213,9 @@ export type DiscordUsernameOptions =
               accentColor: undefined | string;
           };
       } & CommandInteractionOption<CacheType>;
+
+export type WeatherRequestHeaders = {
+    "x-ibm-client-id": string;
+    "x-ibm-client-secret": string;
+    accept: string;
+} & AxiosRequestHeaders;

@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import {
     WeatherConfig,
+    WeatherRequestHeaders,
     WeatherResponse,
     WeatherStorage,
     WeatherTimeSeries,
@@ -125,52 +126,108 @@ const weatherCode = (code: number) => {
     }
 };
 
+const fetchWeather = (url: string, headers: WeatherRequestHeaders) =>
+    new Promise<AxiosResponse>((resolve, reject) =>
+        axios
+            .get(url, { headers })
+            .then((response: AxiosResponse) => {
+                return resolve(response);
+            })
+            .catch((e: any) => {
+                reject(e);
+            })
+    );
+
 export const getWeather = () => {
-    const weatherUrl = new URL(
+    const url = new URL(
         `${config.url}?${new URLSearchParams(config.qs).toString()}`
     ).toString();
 
-    axios
-        .get(weatherUrl, { headers: config.headers })
-        .then((response: AxiosResponse) => {
-            if (response.status !== 429) {
-                const { data } = response;
-                const { features } = data;
+    fetchWeather(url, config.headers)
+        .then((response) => {
+            console.log(response.status);
+            const { data } = response;
+            const { features } = data;
 
-                if (features) {
-                    features[0].properties.timeSeries =
-                        features[0].properties.timeSeries.map((day: any) => {
-                            const [type, description] = weatherCode(
-                                day.daySignificantWeatherCode
-                            );
+            if (features) {
+                features[0].properties.timeSeries =
+                    features[0].properties.timeSeries.map((day: any) => {
+                        const [type, description] = weatherCode(
+                            day.daySignificantWeatherCode
+                        );
 
-                            day.MaxTemp = `${Math.round(
-                                day.dayMaxScreenTemperature
-                            )}º`;
-                            day.LowTemp = `${Math.round(
-                                day.nightMinScreenTemperature
-                            )}º`;
-                            day.MaxFeels = `${Math.round(
-                                day.dayMaxFeelsLikeTemp
-                            )}º`;
-                            day.Wind = Math.round(day.midnight10MWindGust);
+                        day.MaxTemp = `${Math.round(
+                            day.dayMaxScreenTemperature
+                        )}º`;
+                        day.LowTemp = `${Math.round(
+                            day.nightMinScreenTemperature
+                        )}º`;
+                        day.MaxFeels = `${Math.round(
+                            day.dayMaxFeelsLikeTemp
+                        )}º`;
+                        day.Wind = Math.round(day.midnight10MWindGust);
 
-                            day.WeatherType = type;
-                            day.Description = description;
-                            return day;
-                        });
+                        day.WeatherType = type;
+                        day.Description = description;
+                        return day;
+                    });
 
-                    data.location = features[0].properties.location.name;
-                    data.timeseries = features[0].properties.timeSeries;
-                    delete data.type;
-                    delete data.features;
-                    delete data.parameters;
-                }
-
-                storage.data = data;
-                storage.timestamp = new Date().toISOString();
-                IO.local.emit("RELOAD_WEATHER");
+                data.location = features[0].properties.location.name;
+                data.timeseries = features[0].properties.timeSeries;
+                delete data.type;
+                delete data.features;
+                delete data.parameters;
             }
+
+            storage.data = data;
+            storage.timestamp = new Date().toISOString();
+            IO.local.emit("RELOAD_WEATHER");
+        })
+        // axios
+        //     .get(weatherUrl, { headers: config.headers })
+        //     .then((response: AxiosResponse) => {
+        //         if (response.status !== 429) {
+        //             const { data } = response;
+        //             const { features } = data;
+
+        //             if (features) {
+        //                 features[0].properties.timeSeries =
+        //                     features[0].properties.timeSeries.map((day: any) => {
+        //                         const [type, description] = weatherCode(
+        //                             day.daySignificantWeatherCode
+        //                         );
+
+        //                         day.MaxTemp = `${Math.round(
+        //                             day.dayMaxScreenTemperature
+        //                         )}º`;
+        //                         day.LowTemp = `${Math.round(
+        //                             day.nightMinScreenTemperature
+        //                         )}º`;
+        //                         day.MaxFeels = `${Math.round(
+        //                             day.dayMaxFeelsLikeTemp
+        //                         )}º`;
+        //                         day.Wind = Math.round(day.midnight10MWindGust);
+
+        //                         day.WeatherType = type;
+        //                         day.Description = description;
+        //                         return day;
+        //                     });
+
+        //                 data.location = features[0].properties.location.name;
+        //                 data.timeseries = features[0].properties.timeSeries;
+        //                 delete data.type;
+        //                 delete data.features;
+        //                 delete data.parameters;
+        //             }
+
+        //             storage.data = data;
+        //             storage.timestamp = new Date().toISOString();
+        //             IO.local.emit("RELOAD_WEATHER");
+        //         }
+        .catch(() => {
+            console.log(
+                `[${new Date()}] Failed to fetch weather at this time.`
+            );
         });
 };
 

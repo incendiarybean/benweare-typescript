@@ -115,6 +115,10 @@ export const createPlayer = (guild: Guild, targetVoiceChannel: string) => {
         selfDeaf: false,
     });
 
+    if (!connection) {
+        throw new Error("Bot couldn't connect to the voice channel.");
+    }
+
     connection.subscribe(player);
 
     return { connection, player };
@@ -123,24 +127,40 @@ export const createPlayer = (guild: Guild, targetVoiceChannel: string) => {
 export const assist = async (
     interaction: ChatInputCommandInteraction<CacheType>
 ) => {
-    await interaction.reply("https://www.youtube.com/watch?v=CRzfZu0GH14");
+    try {
+        await interaction.reply("https://www.youtube.com/watch?v=CRzfZu0GH14");
+    } catch (e: any) {
+        console.log(e);
+        await interaction.reply({
+            content: "Bot couldn't complete your request at this time.",
+            ephemeral: true,
+        });
+    }
 };
 
 export const cry = async (
     interaction: ChatInputCommandInteraction<CacheType>
 ) => {
-    const message = interaction.options.data[0] as DiscordUsernameOptions;
-    if (message && message.user) {
-        interaction.reply({
-            content: `${message.user}`,
-            embeds: [
-                {
-                    image: {
-                        url: "https://media3.giphy.com/media/8JZxZgr39TLczSJQoS/giphy.gif",
+    try {
+        const message = interaction.options.data[0] as DiscordUsernameOptions;
+        if (message && message.user) {
+            await interaction.reply({
+                content: `${message.user}`,
+                embeds: [
+                    {
+                        image: {
+                            url: "https://media3.giphy.com/media/8JZxZgr39TLczSJQoS/giphy.gif",
+                        },
                     },
-                },
-            ],
-            allowedMentions: { parse: ["everyone"] },
+                ],
+                allowedMentions: { parse: ["everyone"] },
+            });
+        }
+    } catch (e: any) {
+        console.log(e);
+        await interaction.reply({
+            content: "Bot couldn't complete your request at this time.",
+            ephemeral: true,
         });
     }
 };
@@ -148,31 +168,43 @@ export const cry = async (
 export const roll = async (
     interaction: ChatInputCommandInteraction<CacheType>
 ) => {
-    const faceCount = interaction.options.data[0].value
-        ? parseInt(interaction.options.data[0].value as string)
-        : 6;
+    try {
+        const faceCount = interaction.options.data[0].value
+            ? parseInt(interaction.options.data[0].value as string)
+            : 6;
 
-    const dieArray = die.slice(0, faceCount);
-    const randomFace = Math.floor(Math.random() * faceCount);
+        const dieArray = die.slice(0, faceCount);
+        const randomFace = Math.floor(Math.random() * faceCount);
 
-    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-        new ButtonBuilder()
-            .setCustomId("ClearDiceRoll")
-            .setLabel("Done!")
-            .setStyle(ButtonStyle.Primary)
-    );
+        const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+            new ButtonBuilder()
+                .setCustomId("ClearDiceRoll")
+                .setLabel("Done!")
+                .setStyle(ButtonStyle.Primary)
+        );
 
-    await interaction.reply({
-        content: dieArray[randomFace],
-        components: [row],
-    });
+        await interaction.reply({
+            content: dieArray[randomFace],
+            components: [row],
+        });
+    } catch (e: any) {
+        console.log(e);
+        await interaction.reply({
+            content: "Bot couldn't complete your request at this time.",
+            ephemeral: true,
+        });
+    }
 };
 
-export const rpg = (interaction: ChatInputCommandInteraction<CacheType>) => {
+export const rpg = async (
+    interaction: ChatInputCommandInteraction<CacheType>
+) => {
     try {
         const { targetVoiceChannel, guild } = checkVoiceTarget(interaction);
 
         const { connection, player } = createPlayer(guild, targetVoiceChannel);
+
+        await interaction.reply({ content: "BOOM!" });
 
         connection.on(VoiceConnectionStatus.Ready, () => {
             const resource = createAudioResource(
@@ -190,7 +222,10 @@ export const rpg = (interaction: ChatInputCommandInteraction<CacheType>) => {
             });
         });
     } catch (e: any) {
-        return interaction.reply({ content: e.message, ephemeral: true });
+        console.log(e);
+        await interaction.reply({
+            content: "Bot couldn't complete your request at this time.",
+            ephemeral: true,
+        });
     }
-    return interaction.reply({ content: "BOOM!" });
 };
