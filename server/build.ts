@@ -31,9 +31,14 @@ const fileSync = [
         source: "./server/resources/audio",
         destination: "./dist/resources/audio",
     },
-    { source: "./build", destination: "./dist/app" },
 ];
 
 fileSync.forEach(({ source, destination }) =>
     syncServerDist(source, destination)
 );
+
+fs.rename("./build", "./dist/app", (e) => {
+    if (e) {
+        console.log(e);
+    }
+});

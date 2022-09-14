@@ -119,9 +119,6 @@ const weatherCode = (code: number) => {
         case 30:
             return ["thunder", "Thunder"];
         default:
-            console.log("No handler for that response");
-            console.log(code);
-
             return ["", ""];
     }
 };
@@ -145,7 +142,6 @@ export const getWeather = () => {
 
     fetchWeather(url, config.headers)
         .then((response) => {
-            console.log(response.status);
             const { data } = response;
             const { features } = data;
 
@@ -153,7 +149,7 @@ export const getWeather = () => {
                 features[0].properties.timeSeries =
                     features[0].properties.timeSeries.map((day: any) => {
                         const [type, description] = weatherCode(
-                            day.daySignificantWeatherCode
+                            day.daySignificantWeatherCode || 1
                         );
 
                         day.MaxTemp = `${Math.round(
